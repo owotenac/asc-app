@@ -8,4 +8,6 @@ export type MatchCardProps = {
     away: string;
     homeIcon: ImageURISource;
     awayIcon: ImageURISource;
+    Time: string
+    showDetails: boolean 
 };

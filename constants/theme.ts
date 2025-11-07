@@ -7,6 +7,7 @@ import { Platform } from 'react-native';
 
 const tintColorLight = '#0a7ea4';
 const tintColorDark = '#fff';
+export const asc_background = '#024906ff';
 
 export const Colors = {
   light: {
@@ -51,3 +52,17 @@ export const Fonts = Platform.select({
     mono: "SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace",
   },
 });
+
+
+export const TabBarTheme = {
+  headerStyle: {
+    backgroundColor: '#ffffffff',
+  },
+  headerShadowVisible: false,
+  headerTintColor: '#000000ff',
+  tabBarStyle: {
+    backgroundColor: '#ffffffff',
+  },
+  headerShown: true,
+  
+}

@@ -1,71 +1,52 @@
-import { ThemedText } from '@/components/themed-text';
-import dayjs from 'dayjs';
-import { useLocalSearchParams, useRouter } from 'expo-router';
-import React, { useState, } from 'react';
-import { Button, ImageBackground, SafeAreaView, StyleSheet, TextInput, View } from 'react-native';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
-import DateTimePicker, { DateType, useDefaultStyles } from 'react-native-ui-datepicker';
+import { TeamCard } from '@/components/team-card';
+import { CategoryProps } from '@/constants/CategoryProps';
+import { ReadTeam } from '@/hooks/firebase';
+import { useRouter } from 'expo-router';
+import React, { useEffect, useState } from 'react';
 
-import { Picker } from '@react-native-picker/picker';
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 
-const backgroundImg = require('../../assets/images/back.jpg');
+
+import { asc_background } from "@/constants/theme";
+import { ActivityIndicator, ScrollView, StyleSheet } from 'react-native';
 
 export default function StartScreen() {
   const router = useRouter();
-  const params = useLocalSearchParams<{ date: string , category: string}>();
+  const [team, setTeam] = useState<CategoryProps[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const defaultStyles = useDefaultStyles();
-  const [date, setDate] = useState<DateType>();
-  const [category, setCategory] = useState();
 
-  const generate =() => {
-    const d = dayjs(date).format('YYYY-MM-DD')
-    router.push( {
-      pathname:'/agenda', 
-      params:{ date: d, category: category }
-    }
-    )
-  }
+  useEffect(() => {
+    const fetchTeam = async () => {
+      try {
+        const result = await ReadTeam( );
+        setTeam(result);
+     
+        setLoading(false);
+
+      } catch (error) {
+        console.error("Error fetching team:", error);
+      } 
+     
+    };
+
+    fetchTeam();
+  }, []);
 
   return (
 
     <SafeAreaProvider>
       <SafeAreaView style={styles.container}>
-        <ImageBackground source={backgroundImg} resizeMode="stretch" style={styles.image}>
-            <View style={styles.view}>
-        <ThemedText type="title">Agenda</ThemedText>
+            <ScrollView style={styles.scrollview}>           
+                { loading && 
+                    <ActivityIndicator size="large" />
+                } 
 
-        <ThemedText type="default">Catégorie</ThemedText>
+                  {team.map((match, index) => (
+                    <TeamCard key={index} {...match} />
+                  ))}
+          </ScrollView> 
 
-        <Picker style= {styles.picker}
-          selectedValue={category}
-          onValueChange={(itemValue, itemIndex) =>
-            setCategory(itemValue)
-          }>
-          <Picker.Item label="" value="" />
-          <Picker.Item label="Foot 11" value="f11" />
-          <Picker.Item label="Foot 8" value="f11_ecf" />
-          <Picker.Item label="Foot 5" value="FAL" />
-        </Picker>
-        <ThemedText type="default">Date</ThemedText>
-         <DateTimePicker
-          styles={ {
-            ...defaultStyles,
-            today: { borderColor: 'white', borderWidth: 1 },
-            selected: { backgroundColor: 'blue', color: 'white' },            
-      }}
-            mode="single"
-            date={date}
-            containerHeight={150}
-            onChange={({ date }) => setDate(date)}
-        /> 
-        <TextInput
-            style= {styles.input}
-            placeholder={dayjs(date).format('MMMM DD YYYY') }
-            />
-        <Button title="Generate Agenda" disabled={!category} onPress={generate} /> 
-        </View>
-        </ImageBackground>
       </SafeAreaView>
     </SafeAreaProvider>
   );
@@ -74,35 +55,13 @@ export default function StartScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: asc_background,
+    paddingTop: 10,
+    paddingBottom: 30, 
+    padding: 10
   },
-  image :{
-    flex:1,
-    //justifyContent: "center"
-  },
-  view: {
-    flex: 1,
-    padding: 50,
-    gap:15
-  },
-  select: {
-    padding: 20,
-    fontSize: 20,
-    borderRadius: 10
-  },
-  input: {
-    borderColor: "gray",
-    borderWidth: 1,
-    borderRadius: 10,
-    padding: 10,
-    backgroundColor: "white"
-  },
-  datepicker: {
-    backgroundColor: "gray",
-
-  },
-  picker: {
-    backgroundColor: "white",
-    borderRadius: 10,
+  scrollview : {
+    //backgroundColor: '#4e4b4bff'
   }
 
 });

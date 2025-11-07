@@ -1,6 +1,6 @@
 // Import the functions you need from the SDKs you need
+import { CategoryProps } from '@/constants/CategoryProps';
 import { MatchCardProps } from '@/constants/MatchCardProps';
-import dayjs from 'dayjs';
 import { initializeApp } from "firebase/app";
 import { collection, getDocs, getFirestore, limit, orderBy, query, Timestamp, where } from "firebase/firestore";
 
@@ -20,14 +20,7 @@ const firebaseConfig = {
   measurementId: "G-JZW2BY86GR"
 };
 
-
-
-export async function ReadDB(date :string, category: string) {
-
-    // Define start and end dates
-    const startDate = Timestamp.fromDate(new Date(date));
-    const dEnd = dayjs(date).add(2, 'days').format('YYYY-MM-DD')
-    const endDate = Timestamp.fromDate(new Date(dEnd));
+export async function ReadTeamAgenda(cpId :string) {
 
     try {
         // Initialize Firebase
@@ -37,10 +30,50 @@ export async function ReadDB(date :string, category: string) {
         const dbcollection = collection(db, "f11")
 
         const q = query(dbcollection, 
-            where('Section', '==' ,category),
+            where('CompetitionID', '==' ,cpId),
+            orderBy('Date', 'asc'),
+             limit(30), );
+        const querySnapshot = await getDocs(q);
+
+        const results = querySnapshot.docs.map(doc => ({
+            ...doc.data()
+        })) as MatchCardProps[];
+
+        return results;
+
+    } catch (error) {
+        console.error("Failed to initialize Firestore:", error);
+        throw new Error("Could not connect to Firestore." + error);
+    }
+}
+
+export async function ReadDB(date :Date, category: string) {
+
+    // Define start and end dates
+    const currentDay = date.getDay(); 
+    // Calculate days to subtract to get to Monday
+    const daysToMonday = currentDay === 0 ? 6 : currentDay - 1;
+    // Get Monday
+    const monday = new Date(date);
+    monday.setDate(date.getDate() - daysToMonday);
+    // Get Sunday (6 days after Monday)
+    const sunday = new Date(monday);
+    sunday.setDate(monday.getDate() + 6);    
+
+    const startDate = Timestamp.fromDate(new Date(monday));
+    const endDate = Timestamp.fromDate(new Date(sunday));
+    try {
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        //const analytics = getAnalytics(app);
+        const dbcollection = collection(db, "f11")
+
+        const q = query(dbcollection, 
+            //where('Section', '==' ,category),
             where("Date", ">=", startDate),
             where("Date", "<=", endDate),
-            orderBy('Date', 'asc'), limit(10), );
+            orderBy('Date', 'asc'), limit(20), );
         const querySnapshot = await getDocs(q);
 
         const results = querySnapshot.docs.map(doc => ({
@@ -56,3 +89,27 @@ export async function ReadDB(date :string, category: string) {
     }
 }
 
+
+export async function ReadTeam() {
+
+    try {
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const dbcollection = collection(db, "team")
+
+        const q = query(dbcollection,  limit(20), );
+        const querySnapshot = await getDocs(q);
+
+        const results = querySnapshot.docs.map(doc => ({
+            ...doc.data()
+        })) as CategoryProps[];
+
+        //console.log(results)
+        return results;
+
+    } catch (error) {
+        console.error("Failed to initialize Firestore:", error);
+        throw new Error("Could not connect to Firestore." + error);
+    }
+}
