@@ -24,7 +24,7 @@ export default function ChoiceScreen() {
         <Box className="justify-center-safe">
           <VStack space="xs" reversed={false}>
 
-          <Pressable onPress={() => router.push('/agenda-setup')}>
+          {/* <Pressable onPress={() => router.push('/agenda-setup')}>
             <Card className="p-5 rounded-lg max-w-[300px] m-5">
               <Image
                 source={calendarImg}
@@ -35,7 +35,7 @@ export default function ChoiceScreen() {
                   Voir l'agenda du week end
                 </Heading>
             </Card>
-            </Pressable>
+            </Pressable> */}
 
           <Pressable onPress={() => router.push('/resultat-setup')}>
             <Card className="p-5 rounded-lg max-w-[300px] m-5">

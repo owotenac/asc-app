@@ -42,8 +42,8 @@ export default function StartScreen() {
                     <ActivityIndicator size="large" />
                 } 
 
-                  {team.map((match, index) => (
-                    <TeamCard key={index} {...match} />
+                  {team.map((team, index) => (
+                    <TeamCard key={index} {...team} />
                   ))}
           </ScrollView> 
 
@@ -56,9 +56,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: asc_background,
-    paddingTop: 10,
-    paddingBottom: 30, 
-    padding: 10
+    padding: 20
   },
   scrollview : {
     //backgroundColor: '#4e4b4bff'

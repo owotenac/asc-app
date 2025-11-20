@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-type AppState = {
+type FilterState = {
     category: string;
     setCategory: (name: string) => void;
     date: Date;
@@ -9,7 +9,7 @@ type AppState = {
     setCompetitionId: ( id: string) => void;
 };
 
-export const useAppStore = create<AppState>((set) => ({
+export const useAppStore = create<FilterState>((set) => ({
     category: "",
     setCategory: (name: string) => set({ category: name }),
     date: new Date(),

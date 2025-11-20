@@ -1,4 +1,7 @@
 import AgendaComponent from '@/components/agenda-component';
+import { HStack } from '@/components/ui/hstack';
+import { Switch } from '@/components/ui/switch';
+import { Text } from '@/components/ui/text';
 import WeekScheduler from '@/components/week-scheduler';
 import { useAppStore } from '@/constants/filter';
 import { MatchCardProps } from '@/constants/MatchCardProps';
@@ -13,6 +16,13 @@ export default function Agenda() {
   const { date, category } = useAppStore();
   const [matches, setMatches] = useState<MatchCardProps[]>([]);
   const [loading, setLoading] = useState(true);
+  const [homeFilter, setHomeFilter] = useState<boolean>(false);
+
+  const filter = () => {
+    setHomeFilter( !homeFilter )
+    setLoading(true)
+    setMatches([])
+  }
 
   const dateChanged = (newDate: Date) => {
     console.log("OnDateChanged " + newDate)
@@ -21,9 +31,9 @@ export default function Agenda() {
   }
 
   const fetchMatches = async () => {
-    console.log("fetchMatches")
+    console.log("fetchMatches" + homeFilter)
     try {
-      const result = await ReadDB(date, category);
+      const result = await ReadDB(date, category, homeFilter);
 
       setMatches(result);
       setLoading(false);
@@ -38,7 +48,7 @@ export default function Agenda() {
     if (date != null) // can be better
       fetchMatches();
 
-  }, [date]); // will force the refresh is date is updated
+  }, [date, homeFilter]); // will force the refresh is date is updated
 
 
   return (
@@ -49,6 +59,15 @@ export default function Agenda() {
             <WeekScheduler
               onDateChange={dateChanged}
             />
+            <HStack style={styles.hstack} space="md">
+              <Switch
+                trackColor={{ false: '#d4d4d4', true: '#0f4d03ff' }}
+                thumbColor="#fafafa"
+                value = {homeFilter}
+                onToggle= {() => filter()}
+              />
+              <Text size="md">Matchs à domicile uniquement</Text>
+            </HStack>
             {loading ? (
               <ActivityIndicator size="large" />
             ) : (
@@ -71,5 +90,8 @@ const styles = StyleSheet.create({
   },
   image: {
     flex: 1
+  },
+  hstack: {
+    marginLeft: 30
   }
 });

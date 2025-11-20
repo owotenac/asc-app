@@ -1,6 +1,5 @@
 import { Image } from '@/components/ui/image';
 import { Text } from '@/components/ui/text';
-import dayjs from 'dayjs';
 import { useRouter } from 'expo-router';
 
 import React, { useState } from 'react';
@@ -13,6 +12,7 @@ import { Pressable } from '@/components/ui/pressable';
 
 import { ChevronRightIcon, Icon } from '@/components/ui/icon';
 
+import DatePickerCP from '@/components/date-picker-cp';
 import { useAppStore } from '@/constants/filter';
 import * as ImagePicker from 'expo-image-picker';
 
@@ -21,14 +21,13 @@ import * as ImagePicker from 'expo-image-picker';
 export default function ResultatSetupScreen() {
     const router = useRouter();
     const { date, setDate } = useAppStore();
-    const { category, setCategory } = useAppStore();
+    const { category } = useAppStore();
     const [image, setImage] = useState<string | null>(null);
 
     const generate = () => {
-        const d = dayjs(date).format('YYYY-MM-DD')
         router.push({
             pathname: '/resultat',
-            params: { date: d, category: category, image: image }
+            params: { image: image }
         }
         )
     }
@@ -39,13 +38,7 @@ export default function ResultatSetupScreen() {
         }
         );
     }
-    const chooseDate = () => {
-        router.push({
-            pathname: '/date-picker',
-            //params: { date: date }
-        }
-        );
-    }
+
     const pickImage = async () => {
         // No permissions request is necessary for launching the image library
         let result = await ImagePicker.launchImageLibraryAsync({
@@ -75,17 +68,16 @@ export default function ResultatSetupScreen() {
                     </Pressable>
 
                     <Text className="font-bold" size='xl'>Date</Text>
-
-                    <Pressable onPress={() => chooseDate()} style={styles.pressable}>
-                        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                            <Text>{date ? dayjs(date).format('MMMM DD YYYY') : "Select Date... "}</Text>
-                            <Icon as={ChevronRightIcon} size="lg" />
-                        </View>
-                    </Pressable>
+                    <DatePickerCP
+                        value={date}
+                        onChange={setDate}
+                        mode="date"
+                    />
 
                     <Text className="font-bold" size='xl'>Image</Text>
                     <Image
                         source={image ? image : require('../../assets/images/react-logo.png')}
+                        alt='preview'
                         style={{ width: 60, height: 60, alignSelf: 'center', marginTop: 10, marginBottom: 10 }}
                     />
 

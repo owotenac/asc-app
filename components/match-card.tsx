@@ -3,29 +3,33 @@ import { Image } from 'expo-image';
 import { StyleSheet, Text, View } from 'react-native';
 
 
-export function MatchCard( props: MatchCardProps) {
+export function MatchCard(props: MatchCardProps) {
 
-     return (
+    return (
         <View style={styles.match_card}>
-        {props.showDetails && (
-            <>
-            <View style={styles.view_category}>
-                <Text style={styles.text_category}>{props.Competition}</Text>
-            </View>
-            <View style={styles.line}></View>
-            </>
-        )}
+            {props.showDetails && (
+                <>
+                    <View style={styles.view_category}>
+                        <Text style={styles.text_category}>{props.Competition}</Text>
+                    </View>
+                    <View style={styles.line}></View>
+                </>
+            )}
             <View style={styles.view_date}>
                 <Text style={styles.text_date}>{props.DisplayDate} - {props.Time}</Text>
             </View>
-            <View style={styles.view_match}> 
+            <View style={styles.view_match}>
                 <Image source={props.homeIcon} style={styles.logo_match} />
                 <Text style={styles.text_match}>{props.home}</Text>
-{/*                 <Text style={styles.text_score}>6</Text>
-                <Text style={styles.text_score}>-</Text>                
-                <Text style={styles.text_score}>0</Text>        */}         
+                {props.homeScore ? (
+                    <>
+                        <Text style={styles.text_score}>{props.homeScore}</Text>
+                        <Text style={styles.text_score}>-</Text>
+                        <Text style={styles.text_score}>{props.awayScore}</Text>
+                    </>
+                ) : null}
                 <Text style={styles.text_match}>{props.away}</Text>
-                <Image source={props.awayIcon} style={styles.logo_match}/>
+                <Image source={props.awayIcon} style={styles.logo_match} />
             </View>
         </View>
     )
@@ -46,9 +50,9 @@ const styles = StyleSheet.create({
         flex: 1,
         //backgroundColor: '#14611438',
         justifyContent: 'center',
-        padding: 10, 
+        padding: 10,
         gap: 1,
-    }, 
+    },
     view_date: {
         //backgroundColor: '#fff'
     },
@@ -59,24 +63,24 @@ const styles = StyleSheet.create({
     },
     view_match: {
         backgroundColor: '#ffffffff',
-        flexDirection : 'row',
+        flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center'
-    }, 
+    },
     text_match: {
         fontSize: 15
-    }, 
+    },
     text_score: {
-        fontSize: 20, 
+        fontSize: 25,
         fontWeight: 600
-    }, 
-    logo_match : {
-        width:60,
-        height:60,
-        margin:5
+    },
+    logo_match: {
+        width: 60,
+        height: 60,
+        margin: 5
     },
     line: {
-        height:1,
+        height: 1,
         backgroundColor: 'white'
     }
 });
