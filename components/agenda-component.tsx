@@ -1,6 +1,6 @@
 import { MatchCardProps } from '@/constants/MatchCardProps';
 import React, { useEffect, useState } from 'react';
-import { MatchCard } from './match-card';
+import MatchCard from './match-card';
 
 import {
     ActivityIndicator,
@@ -33,18 +33,11 @@ const AgendaComponent: React.FC<AgendaComponentProps> = ({ matchesData, showDeta
     // Render
     return (
         <View style={styles.container}>
-            {/* <ScrollView >
-                {!loading &&
-                 (matchesData.map((match, index) => (
-                    <MatchCard key={index}  {...match} showDetails={showDetails}/>
-                )))
-            }
-            </ScrollView> */}
 
             <FlatList
                 data={matchesData}
                 renderItem={({ item }) => (
-                    <MatchCard {...item} showDetails={showDetails} />
+                    <MatchCard match={item} showDetails={showDetails} />
                 )}
                 keyExtractor={(item, index) => index.toString()}
                 ListEmptyComponent={

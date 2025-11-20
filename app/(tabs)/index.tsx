@@ -37,7 +37,7 @@ export default function StartScreen() {
 
     <SafeAreaProvider>
       <SafeAreaView style={styles.container}>
-            <ScrollView style={styles.scrollview}>           
+            <ScrollView>           
                 { loading && 
                     <ActivityIndicator size="large" />
                 } 
@@ -57,9 +57,5 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: asc_background,
     padding: 20
-  },
-  scrollview : {
-    //backgroundColor: '#4e4b4bff'
   }
-
 });

@@ -32,7 +32,6 @@ export default function TeamDetails() {
     const router = useRouter();
 
     const tabChange = (index: number) => {
-        console.log("tabChanged" + index)
         setIndex(index)
     }
 

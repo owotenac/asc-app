@@ -1,10 +1,11 @@
 
 import MovableText from '@/components/movable-text';
+import MovableView from '@/components/movable-view';
 import TeamImage from '@/components/team-image';
+import Toolbar from '@/components/toolbar';
 import { useAppStore } from '@/constants/filter';
 import { MatchCardProps } from '@/constants/MatchCardProps';
-
-import Toolbar from '@/components/toolbar';
+import { global_styles } from '@/constants/theme';
 
 import ScoreCard from '@/components/score-card';
 import { GetMatch } from '@/hooks/firebase';
@@ -138,8 +139,8 @@ export default function Resultat() {
               imageSize={screenWidth}
               onScreenshot={screenShot}
             />
-            <View style={styles.left_box}>
-              <Text style={styles.text_vertical}>RESULTAT DU WEEKEND</Text>
+            <View style={global_styles.left_box}>
+              <Text style={global_styles.text_vertical}>RESULTAT DU WEEKEND</Text>
             </View>
             {
               loading ? (
@@ -148,13 +149,15 @@ export default function Resultat() {
                 match.map((m, index) => (
                   <React.Fragment key={index}>
                     <MovableText text={m.Competition} />
-                    <ScoreCard matchesData={m}></ScoreCard>
+                    <MovableView initialPosition={80}>
+                    <ScoreCard matchesData={m} ></ScoreCard>
+                    </MovableView>
                   </React.Fragment>
                 ))
               )
             }
           </ViewShot>
-          <View style={styles.captureArea}></View>
+          <View style={global_styles.captureArea}></View>
           {/* </View> */}
           <Toolbar></Toolbar>
         </GestureHandlerRootView >
@@ -166,31 +169,6 @@ export default function Resultat() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignContent: 'space-evenly'
-  },
-  left_box: {
-    position: 'absolute',
-    top: 250,
-    left: (-screenHeight / 2) + 30,
-    width: screenHeight,
-    height: 100,
-  },
-  text_vertical: {
-    transform: [{ rotate: '-90deg' }],
-    color: 'white',
-    fontSize: 35,
-    textAlign: "center",
-    transformOrigin: 'center',
-    fontFamily: 'LatoItalic'
-  },
-  captureArea: {
-    position: 'absolute',
-    borderColor: 'white',
-    backgroundColor: 'transparent',
-    borderWidth: 1,
-    top: screenWidth / 0.8,
-    height: 1,
-    width: '100%'
   }
 
 });

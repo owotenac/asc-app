@@ -1,6 +1,8 @@
-import { CalendarDaysIcon, EyeIcon, Icon } from '@/components/ui/icon';
+import { CalendarDaysIcon, Icon } from '@/components/ui/icon';
 import { TabBarTheme } from '@/constants/theme';
 import { useColorScheme } from '@/hooks/use-color-scheme';
+import AntDesign from '@expo/vector-icons/AntDesign';
+
 import { Tabs } from 'expo-router';
 import React from 'react';
 
@@ -19,7 +21,7 @@ export default function TabLayout() {
         name="index"
         options={{
           title: 'AS Canet Saison 25/26',
-          tabBarIcon: ({ color }) => <Icon size='xl' as={CalendarDaysIcon} color={color} />,
+          tabBarIcon: ({ color }) => <AntDesign name="team" size={24} color={color} /> ,
         }}
       />
       <Tabs.Screen
@@ -33,7 +35,7 @@ export default function TabLayout() {
         name="resultat-setup"
         options={{
           title: 'Resultat',
-          tabBarIcon: ({ color }) => <Icon size='xl' as={EyeIcon} color={color} />,
+          tabBarIcon: ({ color }) => <AntDesign name="trophy" size={24} color={color} /> 
         }}
       />
 

@@ -24,13 +24,22 @@ export default function ResultatSetupScreen() {
     const { category } = useAppStore();
     const [image, setImage] = useState<string | null>(null);
 
-    const generate = () => {
+    const generateResult = () => {
         router.push({
             pathname: '/resultat',
             params: { image: image }
         }
         )
     }
+
+    const generateAffiche = () => {
+        router.push({
+            pathname: '/affiche',
+            params: { image: image }
+        }
+        )
+    }
+
     const chooseCategory = () => {
         router.push({
             pathname: '/category',
@@ -84,7 +93,9 @@ export default function ResultatSetupScreen() {
 
                     <Button title="Select Image..." onPress={pickImage} />
 
-                    <Button title="Generate Resultat" disabled={!category} onPress={generate} />
+                    <Button title="Generate Resultat" disabled={!category} onPress={generateResult} />
+
+                    <Button title="Generate Affiche" disabled={!category} onPress={generateAffiche} />
                 </View>
                 {/* </ImageBackground> */}
             </SafeAreaView>

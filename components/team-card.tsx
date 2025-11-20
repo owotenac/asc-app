@@ -8,8 +8,8 @@ import { StyleSheet, Text, View } from 'react-native';
 
 export function TeamCard(props: CategoryProps) {
     const router = useRouter();
-    const { cpId, setCompetitionId } = useAppStore();
-    const { category, setCategory } = useAppStore();
+    const { setCompetitionId } = useAppStore();
+    const { setCategory } = useAppStore();
 
     const openDetails = () => {
         setCategory(props.cp_name)
@@ -20,10 +20,10 @@ export function TeamCard(props: CategoryProps) {
         );
     }
     return (
-        <Pressable onPress={() => openDetails()}>
+        <Pressable 
+        onPress={() => openDetails()
+        }>
             <View style={styles.team_card}>
-
-                {/* <AntDesign name="bars" size={32} color="white" /> */}
                 <View style={styles.view_category}>
                     <Text style={styles.text_team}>{props.cp_name}</Text>
                     <FontAwesome5 name="arrow-circle-right" size={24} color="white" />
@@ -49,6 +49,7 @@ const styles = StyleSheet.create({
     text_team: {
         color: '#ffffffff',
         fontSize: 25,
+        fontFamily: "LatoRegular"
     },
     team_card: {
         flex: 1,

@@ -2,34 +2,38 @@ import { MatchCardProps } from '@/constants/MatchCardProps';
 import { Image } from 'expo-image';
 import { StyleSheet, Text, View } from 'react-native';
 
+type LocalMatchCardProps = {
+    match : MatchCardProps
+    showDetails: boolean
+}
 
-export function MatchCard(props: MatchCardProps) {
+const MatchCard: React.FC<LocalMatchCardProps> = ( {match, showDetails }) => {
 
     return (
         <View style={styles.match_card}>
-            {props.showDetails && (
+            {showDetails ? (
                 <>
                     <View style={styles.view_category}>
-                        <Text style={styles.text_category}>{props.Competition}</Text>
+                        <Text style={styles.text_category}>{match.Competition}</Text>
                     </View>
                     <View style={styles.line}></View>
                 </>
-            )}
+            ) : null}
             <View style={styles.view_date}>
-                <Text style={styles.text_date}>{props.DisplayDate} - {props.Time}</Text>
+                <Text style={styles.text_date}>{match.DisplayDate} - {match.Time}</Text>
             </View>
             <View style={styles.view_match}>
-                <Image source={props.homeIcon} style={styles.logo_match} />
-                <Text style={styles.text_match}>{props.home}</Text>
-                {props.homeScore ? (
+                <Image source={match.homeIcon} style={styles.logo_match} />
+                <Text style={styles.text_match}>{match.home}</Text>
+                {match.homeScore ? (
                     <>
-                        <Text style={styles.text_score}>{props.homeScore}</Text>
+                        <Text style={styles.text_score}>{match.homeScore}</Text>
                         <Text style={styles.text_score}>-</Text>
-                        <Text style={styles.text_score}>{props.awayScore}</Text>
+                        <Text style={styles.text_score}>{match.awayScore}</Text>
                     </>
                 ) : null}
-                <Text style={styles.text_match}>{props.away}</Text>
-                <Image source={props.awayIcon} style={styles.logo_match} />
+                <Text style={styles.text_match}>{match.away}</Text>
+                <Image source={match.awayIcon} style={styles.logo_match} />
             </View>
         </View>
     )
@@ -71,8 +75,9 @@ const styles = StyleSheet.create({
         fontSize: 15
     },
     text_score: {
-        fontSize: 25,
-        fontWeight: 600
+        fontSize: 20,
+        fontWeight: 600,
+        fontFamily: 'LatoItalic'
     },
     logo_match: {
         width: 60,
@@ -84,3 +89,5 @@ const styles = StyleSheet.create({
         backgroundColor: 'white'
     }
 });
+
+export default MatchCard;

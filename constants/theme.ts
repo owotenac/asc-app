@@ -3,11 +3,12 @@
  * There are many other ways to style your app. For example, [Nativewind](https://www.nativewind.dev/), [Tamagui](https://tamagui.dev/), [unistyles](https://reactnativeunistyles.vercel.app), etc.
  */
 
-import { Platform } from 'react-native';
+import { Dimensions, Platform, StyleSheet } from 'react-native';
 
 const tintColorLight = '#0a7ea4';
 const tintColorDark = '#fff';
 export const asc_background = '#024906ff';
+const { height: screenHeight, width: screenWidth } = Dimensions.get('window');
 
 export const Colors = {
   light: {
@@ -66,3 +67,30 @@ export const TabBarTheme = {
   headerShown: true,
   
 }
+
+export const global_styles = StyleSheet.create({
+    text_vertical: {
+        color: 'white',
+        fontSize: 35,
+        textAlign: "center",
+        transformOrigin: 'center',
+        fontFamily: 'LatoItalic'
+    },
+        captureArea: {
+        position: 'absolute',
+        borderColor: 'white',
+        backgroundColor: 'transparent',
+        borderWidth: 1,
+        top: screenWidth / 0.8,
+        height: 1,
+        width: '100%'
+    },
+    left_box: {
+        position: 'absolute',
+        top: 250,
+        left:(-screenHeight / 2) + 55,
+        width: screenHeight,
+        height: 100,
+        transform: [{ rotate: '-90deg' }],
+    }    
+  })

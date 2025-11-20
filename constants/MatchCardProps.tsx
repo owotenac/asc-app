@@ -11,7 +11,6 @@ export type MatchCardProps = {
     homeIcon_alpha: string;
     awayIcon_alpha: string;
     Time: string
-    showDetails: boolean 
     homeScore: string
     awayScore: string
 };
