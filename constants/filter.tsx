@@ -1,20 +1,17 @@
 import { create } from "zustand";
+import { CategoryProps } from "./CategoryProps";
 
 type FilterState = {
-    category: string;
-    setCategory: (name: string) => void;
     date: Date;
     setDate: (date: Date) => void;
-    cpId: string;
-    setCompetitionId: ( id: string) => void;
+    categoryProps: CategoryProps
+    setCategoryProps: (p : CategoryProps) => void
 };
 
 export const useAppStore = create<FilterState>((set) => ({
-    category: "",
-    setCategory: (name: string) => set({ category: name }),
     date: new Date(),
     setDate: (_date: Date) => set({ date: _date }),
-    cpId: "",
-    setCompetitionId: (_cpId: string) => set( {cpId: _cpId}),
+    categoryProps: {} as CategoryProps,
+    setCategoryProps: ( cat: CategoryProps ) => set( {categoryProps: cat})
 }));
 

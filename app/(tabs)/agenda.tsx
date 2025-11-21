@@ -13,7 +13,7 @@ import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 const backgroundImg = require('../../assets/images/0.jpg');
 
 export default function Agenda() {
-  const { date, category } = useAppStore();
+  const { date, categoryProps } = useAppStore();
   const [matches, setMatches] = useState<MatchCardProps[]>([]);
   const [loading, setLoading] = useState(true);
   const [homeFilter, setHomeFilter] = useState<boolean>(false);
@@ -33,7 +33,7 @@ export default function Agenda() {
   const fetchMatches = async () => {
     console.log("fetchMatches" + homeFilter)
     try {
-      const result = await ReadDB(date, category, homeFilter);
+      const result = await ReadDB(date, String(categoryProps.cp_no), homeFilter);
 
       setMatches(result);
       setLoading(false);

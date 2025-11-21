@@ -38,7 +38,7 @@ export default function Affiche() {
     const [loading, setLoading] = useState(true);
     const [match, setMatch] = useState<MatchCardProps[]>([])
     const { date } = useAppStore();
-    const { category } = useAppStore();
+    const { categoryProps } = useAppStore();
 
     const teamImg = { uri: image };
 
@@ -56,7 +56,7 @@ export default function Affiche() {
         //retreive matchs
         const fetchMatches = async () => {
             try {
-                const result = await GetMatch(date, category);
+                const result = await GetMatch(date, String(categoryProps.cp_no));
                 setMatch(result);
                 setLoading(false);
             }

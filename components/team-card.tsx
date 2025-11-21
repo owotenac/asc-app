@@ -8,12 +8,10 @@ import { StyleSheet, Text, View } from 'react-native';
 
 export function TeamCard(props: CategoryProps) {
     const router = useRouter();
-    const { setCompetitionId } = useAppStore();
-    const { setCategory } = useAppStore();
+    const { setCategoryProps } = useAppStore();
 
     const openDetails = () => {
-        setCategory(props.cp_name)
-        setCompetitionId(String(props.cp_no))
+        setCategoryProps(props)
         router.push({
             pathname: '/team-details'
         }

@@ -11,13 +11,12 @@ const backgroundImg = require('../assets/images/0.jpg');
 export default function TeamAgenda() {
   const [matches, setMatches] = useState<MatchCardProps[]>([]);
   const [loading, setLoading] = useState(true);
-  const { cpId, setCompetitionId } = useAppStore();
+  const { categoryProps } = useAppStore();
 
   useEffect(() => {
     const fetchMatches = async () => {
-      console.log("Read DB TeamAgenda with " + cpId)
       try {
-        const result = await ReadTeamAgenda( cpId );
+        const result = await ReadTeamAgenda( String(categoryProps.cp_no ));
         setMatches(result);
      
         setLoading(false);
@@ -28,7 +27,7 @@ export default function TeamAgenda() {
      
     };
 
-    if (cpId != null) // can be better
+    if (categoryProps != null) // can be better
       fetchMatches();
 
   }, []);
@@ -59,7 +58,5 @@ const styles = StyleSheet.create({
   },
   image: {
     flex: 1,
-    //height: 1350
-
-  }
+   }
 });

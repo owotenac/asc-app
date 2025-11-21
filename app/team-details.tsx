@@ -27,7 +27,7 @@ const routes = [
 export default function TeamDetails() {
     const layout = useWindowDimensions();
     const [index, setIndex] = React.useState(0);
-    const { category } = useAppStore();
+    const { categoryProps } = useAppStore();
 
     const router = useRouter();
 
@@ -40,7 +40,7 @@ export default function TeamDetails() {
         <SafeAreaProvider>
             <SafeAreaView style={styles.container}>
                 <Center style={styles.box}>
-                    <Heading size='2xl'>{category}</Heading>
+                    <Heading size='2xl'>{categoryProps.cp_name}</Heading>
                 </Center>
 
                 <TabView style={styles.tabview}
