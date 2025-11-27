@@ -1,22 +1,22 @@
 
+import { pickImage, useImageStore } from '@/constants/image';
 import { Action, useToolBarStore } from '@/constants/toolbarprovider';
-import React from 'react';
-import { ImageSourcePropType, StyleSheet } from 'react-native';
+import Entypo from '@expo/vector-icons/Entypo';
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import { LinearGradient } from 'expo-linear-gradient';
+import React, { useEffect, useState } from 'react';
+import { Dimensions, Image, StyleSheet } from 'react-native';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import Animated, { useAnimatedStyle, useSharedValue } from 'react-native-reanimated';
 
-import Entypo from '@expo/vector-icons/Entypo';
-import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 
-type Props = {
-    imageSize: number;
-    imgSource: ImageSourcePropType;
-    onScreenshot: () => void;
-};
+const { height: screenHeight, width: screenWidth } = Dimensions.get('window');
+const captureWidth = screenWidth;
+const captureHeight = (screenWidth / 4) * 5; // 4:5 ratio
 
-export default function TeamImage({ imageSize, imgSource, onScreenshot }: Props) {
+export default function TeamImage() {
 
-    const scaleImage = useSharedValue(imageSize);
+    const scaleImage = useSharedValue(screenWidth);
     const translateX = useSharedValue(0);
     const translateY = useSharedValue(0);
 
@@ -25,27 +25,33 @@ export default function TeamImage({ imageSize, imgSource, onScreenshot }: Props)
 
     const { setActions } = useToolBarStore();
 
-    const share = () => {  
-        console.log("share")
-    }
-    const screenShot = () => {  
-        console.log("screenshot")
-        onScreenshot();
-    }
+    const {imgSrc, setImgSrc} = useImageStore();
+
+    const [showHideGradient, setShowHideGradient] = useState(true)
+
+    const showaa = useSharedValue(true)
+
+    useEffect(() => {
+    
+    }, [imgSrc ]);
 
     // Set toolbar actions 
     const actions: Action[] = [
         {
-            label: 'Share',
-            icon: () =><Entypo name="share" size={24} color="white"/>,
-            onPress: () => share(),
+            label: 'Image',
+            icon: () => <Entypo name="image" size={24} color="white" />,
+            onPress: () => pickImage(),
         },
         {
-            label: 'ScreenShot',
-            icon:  () => <MaterialIcons name="screenshot" size={24} color="white"/>,
-            onPress: () => screenShot(),
-        }
+            label: 'Shwo/Hide Gradient',
+            icon: () => <MaterialIcons name="hide-image" size={24} color="white" />,
+            onPress: () => toogleGradient(),
+        },
+
     ];
+    const toogleGradient = () => {
+        setShowHideGradient(prev => !prev)
+    }
 
     const select = Gesture.Tap().runOnJS(true).onEnd(() => {
         setActions(actions)
@@ -84,15 +90,24 @@ export default function TeamImage({ imageSize, imgSource, onScreenshot }: Props)
 
     return (
         <>
-        <GestureDetector gesture={Gesture.Exclusive(dragGesture, select)}>
-            <Animated.View style={[dragStyle, { top: 0 }]}>
-                <GestureDetector gesture={pinchGesture}>
-                    <Animated.View style={scaleStyle}>
-                        <Animated.Image source={imgSource} resizeMode="contain" style={{ width: imageSize, height:imageSize }} alt={"img"}/>
-                    </Animated.View>
-                </GestureDetector>
-            </Animated.View>
-        </GestureDetector>
+            <GestureDetector gesture={Gesture.Exclusive(dragGesture, select)}>
+                <Animated.View style={[dragStyle, { top: 0 }]}>
+                    <GestureDetector gesture={pinchGesture}>
+                        <Animated.View style={scaleStyle}>
+                             { imgSrc ? (
+                            <Image source={{ uri: imgSrc }} resizeMode="contain" style={{ width: captureWidth, height: captureWidth }} alt={"img"} />
+                            ): null}
+                            { showHideGradient ? (
+                            <LinearGradient
+                                colors={['transparent', 'rgba(0,0,0,0.6)']}
+                                style={styles.gradient}
+                                pointerEvents="none"
+                            />
+                            ): null}
+                        </Animated.View>
+                    </GestureDetector>
+                </Animated.View>
+            </GestureDetector>
         </>
     );
 }
@@ -103,5 +118,12 @@ const styles = StyleSheet.create({
     },
     image: {
         flex: 1,
-    }
+    },
+    gradient: {
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        top: 0,
+        bottom: 0,
+    },
 });

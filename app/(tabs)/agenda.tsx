@@ -25,7 +25,6 @@ export default function Agenda() {
   }
 
   const dateChanged = (newDate: Date) => {
-    console.log("OnDateChanged " + newDate)
     setLoading(true)
     setMatches([])
   }

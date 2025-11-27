@@ -1,6 +1,11 @@
+import { Pressable } from '@/components/ui/pressable';
+import { useAppStore } from '@/constants/filter';
 import { MatchCardProps } from '@/constants/MatchCardProps';
-import React, { useEffect, useState } from 'react';
+import { useRouter } from 'expo-router';
+import React, { useEffect, useRef, useState } from 'react';
+import ActionSheetCustom from './action-sheet';
 import MatchCard from './match-card';
+
 
 import {
     ActivityIndicator,
@@ -16,37 +21,54 @@ type AgendaComponentProps = {
 
 const AgendaComponent: React.FC<AgendaComponentProps> = ({ matchesData, showDetails }) => {
 
+    const actionSheetRef = useRef<{ setShow: () => void } | null>(null);
+
     // State management
     const [loading, setLoading] = useState(true);
     const [matches, setMatches] = useState<MatchCardProps[]>([]);
+    const { setMatchProps } = useAppStore();
+
+    const router = useRouter();
+
     // Side effects
     useEffect(() => {
-        // Component did mount / update logic
         setMatches(matchesData);
         setLoading(false)
-        // Cleanup function
+
         return () => {
             // Cleanup logic
         };
     }, []);
 
+    const select = (item: MatchCardProps) => {
+        setMatchProps(item)
+        actionSheetRef.current?.setShow();
+    }
+
     // Render
     return (
-        <View style={styles.container}>
+        <>
+            <View style={styles.container}>
 
-            <FlatList
-                data={matchesData}
-                renderItem={({ item }) => (
-                    <MatchCard match={item} showDetails={showDetails} />
-                )}
-                keyExtractor={(item, index) => index.toString()}
-                ListEmptyComponent={
-                    loading ? <ActivityIndicator size="large" /> : null
-                }
-            />
-        </View>
-    );
-};
+                <FlatList
+                    data={matchesData}
+                    renderItem={({ item }) => (
+                        <Pressable onPress={() => select(item)}>
+                            <MatchCard match={item} showDetails={showDetails} />
+                        </Pressable>
+                    )}
+                    keyExtractor={(item, index) => index.toString()}
+                    ListEmptyComponent={
+                        loading ? <ActivityIndicator size="large" /> : null
+                    }
+                />
+            </View>
+            <ActionSheetCustom ref={actionSheetRef} />
+
+
+        </>
+    )
+}
 
 // Styles
 const styles = StyleSheet.create({
@@ -57,3 +79,4 @@ const styles = StyleSheet.create({
 });
 
 export default AgendaComponent;
+

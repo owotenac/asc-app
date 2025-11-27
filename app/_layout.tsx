@@ -51,7 +51,10 @@ export default function RootLayout() {
             // headerRight: () => <MaterialCommunityIcons.Button name="dots-vertical" size={24} color="black" backgroundColor='white' onPress={openMenu}/>,
           }} />
           <Stack.Screen name="team-details" options={{ headerShown: true, title: "Team" }} />
-
+          <Stack.Screen name="affiche" options={{
+            headerShown: true,
+            title: "Affiche du Week end",
+          }} />
         </Stack>
         <StatusBar style="dark" />
       </ThemeProvider>

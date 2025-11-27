@@ -1,3 +1,4 @@
+import { useAppStore } from '@/constants/filter';
 import React, { useEffect, useState } from 'react';
 import { ActivityIndicator, ImageBackground, RefreshControl, ScrollView, StyleSheet, Text, View } from 'react-native';
 
@@ -9,8 +10,9 @@ export default function Classement() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const [refreshing, setRefreshing] = useState(false);
+    const {categoryProps} = useAppStore();
 
-    const API_URL = 'https://api-dofa.fff.fr/api/compets/446179/phases/1/poules/4/classement_journees?page=1';
+    const API_URL = `https://api-dofa.fff.fr/api/compets/${categoryProps.cp_no}/phases/${categoryProps.cp_phase}/poules/${categoryProps.cp_poule}/classement_journees?page=1`;
 
     const fetchData = async () => {
         try {
@@ -20,15 +22,11 @@ export default function Classement() {
                     'Accept': 'application/json',
                 },
             });
-
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
-
             const jsonData = await response.json();
             setData(jsonData);
-
-            console.log(jsonData)
         } catch (err) {
             //setError(err.message);
             console.error('Error fetching data:', err);
@@ -121,8 +119,9 @@ export default function Classement() {
                                 <Text style={[styles.cell, styles.smallCell]}>{item.lost_games_count}</Text>
                                 <Text style={[styles.cell, styles.smallCell]}>{item.goals_for_count}</Text>
                                 <Text style={[styles.cell, styles.smallCell]}>{item.goals_against_count}</Text>
-                                <Text style={[styles.cell, styles.smallCell, item.goals_diff >= 0 ? styles.positiveCell : styles.negativeCell]}>
-                                    {item.goals_diff > 0 ? `+${item.goals_diff}` : item.goals_diff}
+                                <Text style={[styles.cell, styles.smallCell]}>
+                                    {/* {item.goals_diff > 0 ? `+${item.goals_diff}` : item.goals_diff} */}
+                                    { item.goals_for_count - item.goals_against_count }
                                 </Text>
                             </View>
                         );
@@ -216,7 +215,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
     },
     oddRow: {
-        backgroundColor: '#f9f9f9',
+        backgroundColor: '#ccccccff',
     },
     cell: {
         fontSize: 12,

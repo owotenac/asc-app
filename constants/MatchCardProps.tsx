@@ -11,6 +11,6 @@ export type MatchCardProps = {
     homeIcon_alpha: string;
     awayIcon_alpha: string;
     Time: string
-    homeScore: string
-    awayScore: string
+    homeScore: number
+    awayScore: number
 };

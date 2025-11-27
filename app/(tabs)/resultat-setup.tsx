@@ -21,7 +21,7 @@ import * as ImagePicker from 'expo-image-picker';
 export default function ResultatSetupScreen() {
     const router = useRouter();
     const { date, setDate } = useAppStore();
-    const { category } = useAppStore();
+    const { categoryProps } = useAppStore();
     const [image, setImage] = useState<string | null>(null);
 
     const generateResult = () => {
@@ -42,8 +42,7 @@ export default function ResultatSetupScreen() {
 
     const chooseCategory = () => {
         router.push({
-            pathname: '/category',
-            params: { category: category }
+            pathname: '/category'
         }
         );
     }
@@ -71,7 +70,7 @@ export default function ResultatSetupScreen() {
 
                     <Pressable onPress={() => chooseCategory()} style={styles.pressable}>
                         <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                            <Text>{category ? category : "Select Category... "}</Text>
+                            <Text>{categoryProps ? categoryProps.cp_name : "Select Category... "}</Text>
                             <Icon as={ChevronRightIcon} size="lg" />
                         </View>
                     </Pressable>
@@ -93,9 +92,9 @@ export default function ResultatSetupScreen() {
 
                     <Button title="Select Image..." onPress={pickImage} />
 
-                    <Button title="Generate Resultat" disabled={!category} onPress={generateResult} />
+                    <Button title="Generate Resultat" disabled={!categoryProps} onPress={generateResult} />
 
-                    <Button title="Generate Affiche" disabled={!category} onPress={generateAffiche} />
+                    <Button title="Generate Affiche" disabled={!categoryProps} onPress={generateAffiche} />
                 </View>
                 {/* </ImageBackground> */}
             </SafeAreaView>

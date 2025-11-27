@@ -20,7 +20,7 @@ const firebaseConfig = {
     measurementId: "G-JZW2BY86GR"
 };
 
-export async function ReadTeamAgenda(cpId: string) {
+export async function ReadTeamAgenda(cpId: number) {
 
     try {
         // Initialize Firebase
@@ -28,7 +28,6 @@ export async function ReadTeamAgenda(cpId: string) {
         const db = getFirestore(app);
         //const analytics = getAnalytics(app);
         const dbcollection = collection(db, "f11")
-
         const q = query(dbcollection,
             where('CompetitionID', '==', cpId),
             orderBy('Date', 'asc'),
@@ -47,7 +46,7 @@ export async function ReadTeamAgenda(cpId: string) {
     }
 }
 
-export async function GetMatch(date: Date, cpId: string) {
+export async function GetMatchFromDB(date: Date, cpId: string) {
 
     try {
         // Initialize Firebase
@@ -76,7 +75,7 @@ export async function GetMatch(date: Date, cpId: string) {
             ...doc.data()
         })) as MatchCardProps[];
 
-        return results;
+        return results[0];
 
     } catch (error) {
         console.error("Failed to initialize Firestore:", error);

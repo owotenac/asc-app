@@ -6,15 +6,7 @@ export default function Toolbar() {
 
     const {actions} = useToolBarStore();
 
-    const share = () => { 
-        console.log("Share")
-     }
-
-     const screenShot = () => { 
-        console.log("Screenshot")
-      }
-
-  return (
+    return (
           <View style={styles.statusBar}>
              {actions.map((action, index) => (
               <TouchableOpacity

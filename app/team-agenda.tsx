@@ -16,7 +16,7 @@ export default function TeamAgenda() {
   useEffect(() => {
     const fetchMatches = async () => {
       try {
-        const result = await ReadTeamAgenda( String(categoryProps.cp_no ));
+        const result = await ReadTeamAgenda( categoryProps.cp_no );
         setMatches(result);
      
         setLoading(false);
