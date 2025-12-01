@@ -25,13 +25,13 @@ const MatchCard: React.FC<LocalMatchCardProps> = ( {match, showDetails }) => {
             <View style={styles.view_match}>
                 <Image source={match.homeIcon} style={styles.logo_match} />
                 <Text style={styles.text_match}>{match.home}</Text>
-                {match.homeScore ? (
+                {/* {match.homeScore ? ( */}
                     <>
                         <Text style={styles.text_score}>{match.homeScore}</Text>
                         <Text style={styles.text_score}>-</Text>
                         <Text style={styles.text_score}>{match.awayScore}</Text>
                     </>
-                ) : null}
+                {/* ) : null} */}
                 <Text style={styles.text_match}>{match.away}</Text>
                 <Image source={match.awayIcon} style={styles.logo_match} />
             </View>

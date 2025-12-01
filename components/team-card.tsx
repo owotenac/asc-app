@@ -26,6 +26,7 @@ export function TeamCard(props: CategoryProps) {
                     <Text style={styles.text_team}>{props.cp_name}</Text>
                     <FontAwesome5 name="arrow-circle-right" size={24} color="white" />
                 </View>
+                    <Text style={styles.text_poule}>Phase {props.cp_phase} - {props.cp_poule_name}</Text>                
             </View>
         </Pressable>
     )
@@ -39,10 +40,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         //verticalAlign: "middle",
-        backgroundColor: '#4b724dff',
-        padding: 20,
-        margin: 10,
-        borderRadius: 10
     },
     text_team: {
         color: '#ffffffff',
@@ -51,7 +48,18 @@ const styles = StyleSheet.create({
     },
     team_card: {
         flex: 1,
-        flexDirection: "row",
-        alignItems: 'center',        
+        flexDirection: "column",
+        backgroundColor: '#49704dff',
+        padding: 15,
+        margin: 5,
+        borderRadius: 10,
+        //borderWidth:1,
+        //borderBottomColor: "white"
+    },
+    text_poule: {
+        color: '#ffffffff',
+        fontSize: 10,
+       // fontFamily: "LatoRegular"
     }
+
 });

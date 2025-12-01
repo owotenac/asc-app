@@ -1,18 +1,13 @@
-import { Image } from '@/components/ui/image';
-import { Text } from '@/components/ui/text';
 import { useRouter } from 'expo-router';
 
 import React, { useState } from 'react';
-import { Button, StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 
-import { Pressable } from '@/components/ui/pressable';
+import ReadAndStoreMonitor from '@/components/updatedb';
 
 
 
-import { ChevronRightIcon, Icon } from '@/components/ui/icon';
-
-import DatePickerCP from '@/components/date-picker-cp';
 import { useAppStore } from '@/constants/filter';
 import * as ImagePicker from 'expo-image-picker';
 
@@ -66,35 +61,7 @@ export default function ResultatSetupScreen() {
         <SafeAreaProvider>
             <SafeAreaView style={styles.container}>
                 <View style={styles.view}>
-                    <Text className="font-bold" size='xl'>Catégorie</Text>
-
-                    <Pressable onPress={() => chooseCategory()} style={styles.pressable}>
-                        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                            <Text>{categoryProps ? categoryProps.cp_name : "Select Category... "}</Text>
-                            <Icon as={ChevronRightIcon} size="lg" />
-                        </View>
-                    </Pressable>
-
-                    <Text className="font-bold" size='xl'>Date</Text>
-                    <DatePickerCP
-                        value={date}
-                        onChange={setDate}
-                        mode="date"
-                    />
-
-                    <Text className="font-bold" size='xl'>Image</Text>
-                    <Image
-                        source={image ? image : require('../../assets/images/react-logo.png')}
-                        alt='preview'
-                        style={{ width: 60, height: 60, alignSelf: 'center', marginTop: 10, marginBottom: 10 }}
-                    />
-
-
-                    <Button title="Select Image..." onPress={pickImage} />
-
-                    <Button title="Generate Resultat" disabled={!categoryProps} onPress={generateResult} />
-
-                    <Button title="Generate Affiche" disabled={!categoryProps} onPress={generateAffiche} />
+                    <ReadAndStoreMonitor></ReadAndStoreMonitor>
                 </View>
                 {/* </ImageBackground> */}
             </SafeAreaView>

@@ -83,7 +83,7 @@ export async function GetMatchFromDB(date: Date, cpId: string) {
     }
 }
 
-export async function ReadDB(date: Date, category: string, homeFilter: boolean) {
+export async function ReadDB(date: Date, homeFilter: boolean) {
 
     // Define start and end dates
     const currentDay = date.getDay();

@@ -23,15 +23,27 @@ export default function Classement() {
                 },
             });
             if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
+                setError(`${response.status}`)
             }
-            const jsonData = await response.json();
-            setData(jsonData);
+            else {
+                const jsonData = await response.json();
+                // Handle different response structures
+                if (Array.isArray(jsonData)) {
+                    setData(jsonData);
+                } else if (jsonData.data && Array.isArray(jsonData.data)) {
+                    setData(jsonData.data);
+                } else if (jsonData.classement && Array.isArray(jsonData.classement)) {
+                    setData(jsonData.classement);
+                } else {
+                    console.log('Unexpected API response structure:', jsonData);
+                    setError('Invalid data format received from API');
+                    setData(null);
+                }
+            }
         } catch (err) {
-            //setError(err.message);
-            console.error('Error fetching data:', err);
+            setError(`${err}`);         
         } finally {
-            setLoading(false);
+             setLoading(false);
             setRefreshing(false);
         }
     };
@@ -64,7 +76,6 @@ export default function Classement() {
     }
 
     if (!data) {
-        console.log(data)
         return (
             <View style={styles.centerContainer}>
                 <Text style={styles.errorText}>No data available</Text>
@@ -95,11 +106,9 @@ export default function Classement() {
                         <Text style={[styles.headerCell, styles.smallCell]}>BC</Text>
                         <Text style={[styles.headerCell, styles.smallCell]}>Diff</Text>
                     </View>
-
-                    {/* Table Rows */}
+                    {!loading ? (
+                        <>
                     {data.map((item, index) => {
-
-                        //console.log(item.equipe.short_name)
                         return (
                             <View
                                 key={`${index}-${index}`}
@@ -125,8 +134,9 @@ export default function Classement() {
                                 </Text>
                             </View>
                         );
-
                     })}
+                    </>
+                ): null}
                 </View>
             </ScrollView>
         </ScrollView >
