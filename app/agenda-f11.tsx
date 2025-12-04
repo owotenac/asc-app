@@ -2,17 +2,15 @@ import AgendaComponent from '@/components/agenda-component';
 import { HStack } from '@/components/ui/hstack';
 import { Switch } from '@/components/ui/switch';
 import { Text } from '@/components/ui/text';
-import WeekScheduler from '@/components/week-scheduler';
 import { useAppStore } from '@/constants/filter';
 import { MatchCardProps } from '@/constants/MatchCardProps';
 import { ReadDB } from '@/hooks/firebase';
 import React, { useEffect, useState } from 'react';
 import { ActivityIndicator, ImageBackground, StyleSheet, View } from 'react-native';
-import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 
-const backgroundImg = require('../../assets/images/0.jpg');
+const backgroundImg = require('../assets/images/0.jpg');
 
-export default function Agenda() {
+export default function AgendaF11() {
   const { date } = useAppStore();
   const [matches, setMatches] = useState<MatchCardProps[]>([]);
   const [loading, setLoading] = useState(true);
@@ -24,15 +22,9 @@ export default function Agenda() {
     setMatches([])
   }
 
-  const dateChanged = (newDate: Date) => {
-    setLoading(true)
-    setMatches([])
-  }
-
   const fetchMatches = async () => {
     try {
       const result = await ReadDB(date, homeFilter);
-
       setMatches(result);
       setLoading(false);
 
@@ -43,20 +35,17 @@ export default function Agenda() {
   };
 
   useEffect(() => {
-    if (date != null) // can be better
-      fetchMatches();
+      setLoading(true)
+      if (date != null) // can be better
+        fetchMatches();
 
   }, [date, homeFilter]); // will force the refresh is date is updated
 
 
   return (
-    <SafeAreaProvider >
-      <SafeAreaView style={styles.container} >
+      <View style={styles.container} >
         <ImageBackground source={backgroundImg} resizeMode="stretch" style={styles.image}>
           <View style={styles.container}>
-            <WeekScheduler
-              onDateChange={dateChanged}
-            />
             <HStack style={styles.hstack} space="md">
               <Switch
                 trackColor={{ false: '#d4d4d4', true: '#0f4d03ff' }}
@@ -71,20 +60,22 @@ export default function Agenda() {
             ) : (
               <AgendaComponent
                 matchesData={matches}
+                plateauxData={[]}
                 showDetails={true}
               />
             )}
           </View>
         </ImageBackground>
-      </SafeAreaView>
-    </SafeAreaProvider>
+      </View>
+
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: 'column'
+    flexDirection: 'column',
+    marginTop: 10
   },
   image: {
     flex: 1

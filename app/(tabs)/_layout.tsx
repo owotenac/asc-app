@@ -25,7 +25,7 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="agenda"
+        name="full-agenda"
         options={{
           title: 'Agenda',
           tabBarIcon: ({ color }) => <Icon size='xl' as={CalendarDaysIcon} color={color} />,
@@ -34,8 +34,8 @@ export default function TabLayout() {
       <Tabs.Screen
         name="resultat-setup"
         options={{
-          title: 'Resultat',
-          tabBarIcon: ({ color }) => <AntDesign name="trophy" size={24} color={color} /> 
+          title: 'Admin',
+          tabBarIcon: ({ color }) => <AntDesign name="menu" size={24} color={color} /> 
         }}
       />
 

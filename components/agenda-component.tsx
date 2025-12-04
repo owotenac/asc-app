@@ -1,10 +1,11 @@
 import { Pressable } from '@/components/ui/pressable';
 import { useAppStore } from '@/constants/filter';
-import { MatchCardProps } from '@/constants/MatchCardProps';
+import { MatchCardProps, PlateauCardProps } from '@/constants/MatchCardProps';
 import { useRouter } from 'expo-router';
 import React, { useEffect, useRef, useState } from 'react';
 import ActionSheetCustom from './action-sheet';
 import MatchCard from './match-card';
+import PlateauCard from './plateau-card';
 
 
 import {
@@ -16,16 +17,18 @@ import {
 
 type AgendaComponentProps = {
     matchesData: MatchCardProps[];
+    plateauxData: PlateauCardProps[];
     showDetails: boolean
 };
 
-const AgendaComponent: React.FC<AgendaComponentProps> = ({ matchesData, showDetails }) => {
+const AgendaComponent: React.FC<AgendaComponentProps> = ({ matchesData, plateauxData, showDetails }) => {
 
     const actionSheetRef = useRef<{ setShow: () => void } | null>(null);
 
     // State management
     const [loading, setLoading] = useState(true);
     const [matches, setMatches] = useState<MatchCardProps[]>([]);
+    const [plateaux, setPlateaux] = useState<PlateauCardProps[]>([]);
     const { setMatchProps } = useAppStore();
 
     const router = useRouter();
@@ -33,6 +36,7 @@ const AgendaComponent: React.FC<AgendaComponentProps> = ({ matchesData, showDeta
     // Side effects
     useEffect(() => {
         setMatches(matchesData);
+        setPlateaux(plateauxData)
         setLoading(false)
 
         return () => {
@@ -49,7 +53,7 @@ const AgendaComponent: React.FC<AgendaComponentProps> = ({ matchesData, showDeta
     return (
         <>
             <View style={styles.container}>
-
+                { matchesData.length >0  ? (
                 <FlatList
                     data={matchesData}
                     renderItem={({ item }) => (
@@ -62,6 +66,19 @@ const AgendaComponent: React.FC<AgendaComponentProps> = ({ matchesData, showDeta
                         loading ? <ActivityIndicator size="large" /> : null
                     }
                 />
+                ): (
+                <FlatList
+                    data={plateaux}
+                    renderItem={({ item }) => (
+                        <PlateauCard match={item}/>
+                    )}
+                    keyExtractor={(item, index) => index.toString()}
+                    ListEmptyComponent={
+                        loading ? <ActivityIndicator size="large" /> : null
+                    }
+                />
+                )
+            }
             </View>
             <ActionSheetCustom ref={actionSheetRef} />
 

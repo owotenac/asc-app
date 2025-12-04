@@ -41,6 +41,7 @@ export default function TeamAgenda() {
             ) : (
               <AgendaComponent 
               matchesData={matches}
+              plateauxData={[]}
               showDetails={false}
               />
             )}
