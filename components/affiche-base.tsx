@@ -14,6 +14,7 @@ import { ActivityIndicator, Dimensions, Pressable, StyleSheet, Text, View } from
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import ViewShot from 'react-native-view-shot';
+import SponsorsComponent from './sponsors-component';
 
 const { height: screenHeight, width: screenWidth } = Dimensions.get('window');
 const captureWidth = screenWidth;
@@ -127,6 +128,7 @@ const AfficheBase = ({ children, isResultat }: AfficheBaseProps) => {
                                     </>
                                 )
                         }
+                    <SponsorsComponent />
                     </ViewShot>
                     <View style={global_styles.captureArea}></View>
                     <Pressable style={styles.touch} onPress={select}/>

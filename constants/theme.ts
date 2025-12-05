@@ -70,7 +70,7 @@ export const TabBarTheme = {
 
 export const global_styles = StyleSheet.create({
     text_vertical: {
-        color: 'white',
+        color: '#ffffff40',
         fontSize: 35,
         textAlign: "center",
         transformOrigin: 'center',
