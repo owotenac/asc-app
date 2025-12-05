@@ -35,8 +35,8 @@ const AfficheCard: React.FC<AfficheCardProps> = ({ matchesData }) => {
          <TouchableOpacity onPress={() => setActions(actions)}>
             <View style={styles.global_box}>
                 <View style={styles.logo_box}>
-                    <Image source={{ uri: `data:image/png;base64,${matchesData.homeIcon_alpha}` }} style={styles.logo_match} />
-                    <Image source={{ uri: `data:image/png;base64,${matchesData.awayIcon_alpha}` }} style={styles.logo_match} />
+                    <Image source={matchesData.homeIcon_alpha} style={styles.logo_match} />
+                    <Image source={matchesData.awayIcon_alpha} style={styles.logo_match} />
                 </View>
                 <View style={styles.logo_box}>
                     <Text style={[styles.text_team, { color: textColor }]}>{matchesData?.home}</Text>

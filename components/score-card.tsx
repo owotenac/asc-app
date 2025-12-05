@@ -35,11 +35,11 @@ const ScoreCard: React.FC<ScoreCardProps> = ({ matchesData }) => {
         <TouchableOpacity onPressIn={() => setActions(actions)}>
  
             <View style={styles.logo_box}>
-                <Image source={{ uri: `data:image/png;base64,${matchesData.homeIcon_alpha}` }} style={styles.logo_match} />
+                <Image source={matchesData.homeIcon_alpha} style={styles.logo_match} />
                 <Text style={[styles.text_score, {color: textColor} ]}>{matchesData?.homeScore}</Text>
                 <Text style={[styles.text_score, {color: textColor} ]}>-</Text>
                 <Text style={[styles.text_score, {color: textColor} ]}>{matchesData?.awayScore}</Text>
-                <Image source={{ uri: `data:image/png;base64,${matchesData.awayIcon_alpha}` }} style={styles.logo_match} />
+                <Image source={matchesData.awayIcon_alpha} style={styles.logo_match} />
             </View>
             </TouchableOpacity>
     )
