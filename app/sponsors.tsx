@@ -22,7 +22,9 @@ export default function SponsorsComponent() {
     return (
         <AfficheBase
         verticalText=''
-            showVertialText={false}>
+            showVertialText={false}
+            showTeamImage={false}
+            >
             <Pressable 
                 onPress={changeSponsors}>
                 <View style={styles.container}>

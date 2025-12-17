@@ -23,10 +23,11 @@ interface AfficheBaseProps {
     verticalText: string
     showVertialText?: boolean;
     actionToAdd?: Action[]
+    showTeamImage?: boolean
 }
 
 
-const AfficheBase = ({ children, verticalText, showVertialText, actionToAdd }: AfficheBaseProps) => {
+const AfficheBase = ({ children, verticalText, showVertialText, actionToAdd, showTeamImage = true }: AfficheBaseProps) => {
 
     const { categoryProps, matchProps, setMatchProps } = useAppStore();
     const { date } = useAppStore();
@@ -104,9 +105,10 @@ const AfficheBase = ({ children, verticalText, showVertialText, actionToAdd }: A
                             quality: 1,
                         }}
                     >
-
+                        { showTeamImage ? (
                         <TeamImage />
-
+                        ):null
+                        }
                         {showVertialText ? (
                             <View style={styles.left_box}>
                                 <Text style={styles.text_vertical}>{verticalText}</Text>
