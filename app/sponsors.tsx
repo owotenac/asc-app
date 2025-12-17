@@ -25,9 +25,9 @@ export default function SponsorsComponent() {
             showVertialText={false}
             showTeamImage={false}
             >
+                <View style={styles.container}>
             <Pressable 
                 onPress={changeSponsors}>
-                <View style={styles.container}>
                     <FlatList style={styles.list}
                         data={imageNumbers}
                         numColumns={2}
@@ -42,9 +42,9 @@ export default function SponsorsComponent() {
                         }
                         keyExtractor={(item, index) => index.toString()}
                     />
-                </View>
             </Pressable>
             <Text style={styles.text}>MERCI A NOS SPONSORS</Text>
+            </View>
         </AfficheBase>
     )
 
@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         verticalAlign: 'middle',
-        margin:20,
+        margin:30,
     },
     imageWrapper: {
         backgroundColor: '#e0e0e0',
@@ -79,8 +79,8 @@ const styles = StyleSheet.create({
         overflow: 'hidden',
     },
     image: {
-        width: 200,
-        height: 150,
+        width: 150,
+        height: 115,
         margin: 10,
         borderRadius: 8,
     },
@@ -89,11 +89,8 @@ const styles = StyleSheet.create({
         gap: 10,
     },
     text: {
-        marginTop:20,
         color: 'white',
         fontSize: 25,
-        justifyContent: 'center',
-        alignItems: 'center',
         fontFamily: "LatoItalic",
         textAlign: 'center'
     }
