@@ -1,12 +1,12 @@
-import { ChevronLeftIcon, ChevronRightIcon, Icon } from '@/components/ui/icon';
-import { Pressable } from '@/components/ui/pressable';
 import { useAppStore } from '@/constants/filter';
+import AntDesign from '@expo/vector-icons/AntDesign';
 import dayjs from 'dayjs';
 import React, { useEffect, useState } from 'react';
 
 import {
     StyleSheet,
     Text,
+    TouchableOpacity,
     View
 } from 'react-native';
 
@@ -65,13 +65,13 @@ const WeekScheduler: React.FC<DateSelectorProps> =  ({ onDateChange }) => {
     return (
 
         <View style={styles.container}>
-            <Pressable onPress={down}>
-                <Icon as={ChevronLeftIcon} size="xl" />
-            </Pressable>
+            <TouchableOpacity onPress={down}>
+                <AntDesign name="left" size={24} color="white" />
+            </TouchableOpacity>
             <Text style={styles.text_team}>{getText()}</Text>
-            <Pressable onPress={up}>
-                <Icon as={ChevronRightIcon} size="xl" />
-            </Pressable>
+            <TouchableOpacity onPress={up}>
+                <AntDesign name="right" size={24} color="white" />
+            </TouchableOpacity>
         </View>
 
     );

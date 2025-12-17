@@ -1,11 +1,9 @@
-import { Center } from '@/components/ui/center';
 
-import { Heading } from '@/components/ui/heading';
 import { useAppStore } from '@/constants/filter';
 import { asc_background } from "@/constants/theme";
 import { useRouter } from 'expo-router';
 import React from 'react';
-import { StyleSheet, useWindowDimensions } from 'react-native';
+import { StyleSheet, Text, useWindowDimensions, View } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { SceneMap, TabBar, TabView } from 'react-native-tab-view';
 
@@ -39,9 +37,9 @@ export default function TeamDetails() {
 
         <SafeAreaProvider>
             <SafeAreaView style={styles.container}>
-                <Center style={styles.box}>
-                    <Heading size='2xl'>{categoryProps.cp_name}</Heading>
-                </Center>
+                <View style={styles.header}>
+                    <Text style={styles.text_team}>{categoryProps.cp_name}</Text>
+                </View>
 
                 <TabView style={styles.tabview}
                     navigationState={{ index, routes }}
@@ -59,12 +57,16 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: asc_background,
-        verticalAlign: 'middle'
+        //verticalAlign: 'middle'
     },
-    box: {
-        margin: 10,
-        paddingTop: 10,
-        justifyContent: "center"
+    header: {
+        margin: 5,
+    },
+    text_team: {
+        color: "#fff",
+        fontSize: 30,
+        textAlign: "center",
+        fontFamily: "Exo2"
     },
     tabbar: {
         backgroundColor: asc_background,

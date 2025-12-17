@@ -30,9 +30,10 @@ export default function AgendaFAL() {
   };
 
   useEffect(() => {
-    setLoading(true)    
-    if (date != null) // can be better
+    if (date) {
+      setLoading(true)    
       fetchMatches();
+    }
 
   }, [date]); // will force the refresh is date is updated
 

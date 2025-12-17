@@ -1,4 +1,3 @@
-import { Pressable } from '@/components/ui/pressable';
 import { useAppStore } from '@/constants/filter';
 import { MatchCardProps, PlateauCardProps } from '@/constants/MatchCardProps';
 import { useRouter } from 'expo-router';
@@ -7,12 +6,12 @@ import ActionSheetCustom from './action-sheet';
 import MatchCard from './match-card';
 import PlateauCard from './plateau-card';
 
-
 import {
     ActivityIndicator,
-    //ScrollView,
     FlatList,
-    StyleSheet, View
+    StyleSheet,
+    TouchableOpacity,
+    View
 } from 'react-native';
 
 type AgendaComponentProps = {
@@ -57,9 +56,9 @@ const AgendaComponent: React.FC<AgendaComponentProps> = ({ matchesData, plateaux
                 <FlatList
                     data={matchesData}
                     renderItem={({ item }) => (
-                        <Pressable onPress={() => select(item)}>
+                        <TouchableOpacity onPress={() => select(item)}>
                             <MatchCard match={item} showDetails={showDetails} />
-                        </Pressable>
+                        </TouchableOpacity>
                     )}
                     keyExtractor={(item, index) => index.toString()}
                     ListEmptyComponent={

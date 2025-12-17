@@ -1,7 +1,7 @@
-import { CalendarDaysIcon, Icon } from '@/components/ui/icon';
 import { TabBarTheme } from '@/constants/theme';
 import { useColorScheme } from '@/hooks/use-color-scheme';
 import AntDesign from '@expo/vector-icons/AntDesign';
+import Entypo from '@expo/vector-icons/Entypo';
 
 import { Tabs } from 'expo-router';
 import React from 'react';
@@ -28,11 +28,11 @@ export default function TabLayout() {
         name="full-agenda"
         options={{
           title: 'Agenda',
-          tabBarIcon: ({ color }) => <Icon size='xl' as={CalendarDaysIcon} color={color} />,
+          tabBarIcon: ({ color }) => <Entypo name="calendar" size={24} color={color} />,
         }}
       />
       <Tabs.Screen
-        name="resultat-setup"
+        name="admin"
         options={{
           title: 'Admin',
           tabBarIcon: ({ color }) => <AntDesign name="menu" size={24} color={color} /> 

@@ -1,12 +1,12 @@
 import { useRouter } from 'expo-router';
 
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { Button, StyleSheet, View } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 
-import ReadAndStoreMonitor from '@/components/updatedb';
+import FirebaseStatusMonitor from '@/components/firebase-monitor';
 
-export default function ResultatSetupScreen() {
+export default function AdminScreen() {
     const router = useRouter();
 
     return (
@@ -14,7 +14,8 @@ export default function ResultatSetupScreen() {
         <SafeAreaProvider>
             <SafeAreaView style={styles.container}>
                 <View style={styles.view}>
-                    <ReadAndStoreMonitor></ReadAndStoreMonitor>
+                    <Button title="Generate Sponsors" onPress={() => router.push('/sponsors')} />
+                    <FirebaseStatusMonitor></FirebaseStatusMonitor>
                 </View>
             </SafeAreaView>
         </SafeAreaProvider>

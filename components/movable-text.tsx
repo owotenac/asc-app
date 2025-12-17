@@ -68,6 +68,7 @@ const styles = StyleSheet.create({
     text_section: {
         width: '100%',
         fontFamily: 'Exo2',
-        fontWeight: 600
+        fontWeight: 600, 
+        textAlign: "right"
     },
 })

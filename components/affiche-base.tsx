@@ -2,19 +2,17 @@ import TeamImage from '@/components/team-image';
 import Toolbar from '@/components/toolbar';
 import { useAppStore } from '@/constants/filter';
 import { pickImage } from '@/constants/image';
-import { global_styles } from '@/constants/theme';
 import { Action, useToolBarStore } from '@/constants/toolbarprovider';
 import { GetMatchFromDB } from '@/hooks/firebase';
 import * as ScreenShot from '@/hooks/screenshot';
 import Entypo from '@expo/vector-icons/Entypo';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 
-import React, { ReactNode, useEffect, useRef, useState } from 'react';
-import { ActivityIndicator, Dimensions, Pressable, StyleSheet, Text, View } from 'react-native';
+import React, { ReactNode, useEffect, useRef } from 'react';
+import { Dimensions, Pressable, StyleSheet, Text, View } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import ViewShot from 'react-native-view-shot';
-import SponsorsComponent from './sponsors-component';
 
 const { height: screenHeight, width: screenWidth } = Dimensions.get('window');
 const captureWidth = screenWidth;
@@ -22,17 +20,17 @@ const captureHeight = (screenWidth / 4) * 5; // 4:5 ratio
 
 interface AfficheBaseProps {
     children: ReactNode;
-    isResultat: boolean
+    verticalText: string
+    showVertialText?: boolean;
+    actionToAdd?: Action[]
 }
 
 
-const AfficheBase = ({ children, isResultat }: AfficheBaseProps) => {
+const AfficheBase = ({ children, verticalText, showVertialText, actionToAdd }: AfficheBaseProps) => {
 
     const { categoryProps, matchProps, setMatchProps } = useAppStore();
     const { date } = useAppStore();
-    const [loading, setLoading] = useState(true);
     const viewShotRef = useRef<ViewShot>(null);
-    const [imgSrc, setImgSrc] = useState<string>();
     const { setActions } = useToolBarStore();
 
     // const [permissionResponse, requestPermission] = MediaLibrary.usePermissions({
@@ -47,11 +45,6 @@ const AfficheBase = ({ children, isResultat }: AfficheBaseProps) => {
             label: 'Image',
             icon: () => <Entypo name="image" size={24} color="white" />,
             onPress: () => pickImage(),
-        },
-        {
-            label: 'Share',
-            icon: () => <Entypo name="share" size={24} color="white" />,
-            onPress: () => share(),
         },
         {
             label: 'ScreenShot',
@@ -72,7 +65,6 @@ const AfficheBase = ({ children, isResultat }: AfficheBaseProps) => {
                 }
 
                 setMatchProps(result);
-                setLoading(false);
             }
             catch (error) {
                 console.error("Error fetching matches:", error);
@@ -81,57 +73,52 @@ const AfficheBase = ({ children, isResultat }: AfficheBaseProps) => {
 
         if (!matchProps)
             fetchMatches();
-        else
-            setLoading(false)
 
     }, []);
 
-    const share = () => {
-        console.log("share")
-    }
     const screenShot = async () => {
         if (viewShotRef)
             ScreenShot.screenShot(viewShotRef)
     };
 
     const select = () => {
-        setActions(actions)
+        const newActions = actionToAdd
+            ? actions.concat(actionToAdd)  // concat returns new array
+            : actions;
+        setActions(newActions);
     }
 
     return (
         <SafeAreaProvider >
             <SafeAreaView style={styles.container} >
-                <GestureHandlerRootView  >
+                <GestureHandlerRootView >
 
                     <ViewShot ref={viewShotRef}
                         style={{
                             width: captureWidth,
                             height: captureHeight,
-                            overflow: 'hidden', // Clips content that exceeds bounds
+                            overflow: 'visible', // Clips content that exceeds bounds
                         }}
                         options={{
                             format: 'png',
                             quality: 1,
                         }}
                     >
+
                         <TeamImage />
-                        <View style={global_styles.left_box}>
-                            <Text style={global_styles.text_vertical}>{isResultat ? ("RESULTAT DU WEEKEND") : ("AFFICHE DU WEEKEND")}</Text>
-                        </View>
-                        {
-                            loading ? (
-                                <ActivityIndicator size="large" />
-                            ) :
-                                (
-                                    <>
-                                        {children}
-                                    </>
-                                )
-                        }
-                    <SponsorsComponent />
+
+                        {showVertialText ? (
+                            <View style={styles.left_box}>
+                                <Text style={styles.text_vertical}>{verticalText}</Text>
+                            </View>
+                        ) : null}
+
+                        {children}
+
+
                     </ViewShot>
-                    <View style={global_styles.captureArea}></View>
-                    <Pressable style={styles.touch} onPress={select}/>
+                    <View style={styles.captureArea}></View>
+                    <Pressable style={styles.touch} onPress={select} />
                     <Toolbar></Toolbar>
                 </GestureHandlerRootView >
             </SafeAreaView>
@@ -149,6 +136,36 @@ const styles = StyleSheet.create({
     touch: {
         flex: 1
         //minHeight : 
+    },
+    text_vertical: {
+        color: '#ffffff40',
+        fontSize: 35,
+        textAlign: "center",
+        transformOrigin: 'center',
+        fontFamily: 'LatoItalic'
+    },
+    left_box: {
+        position: 'absolute',
+        top: 250,
+        left: (-screenHeight / 2) + 55,
+        width: screenHeight,
+        height: 100,
+        transform: [{ rotate: '-90deg' }],
+    },
+    captureArea: {
+        position: 'absolute',
+        borderColor: 'white',
+        backgroundColor: 'transparent',
+        borderWidth: 1,
+        top: screenWidth / 0.8,
+        height: 1,
+        width: '100%'
+    },
+    child: {
+        flex: 1,
+        //position: 'absolute'
+        //top:0,
+        //left:0
     }
 
 });

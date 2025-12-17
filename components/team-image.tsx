@@ -5,7 +5,7 @@ import Entypo from '@expo/vector-icons/Entypo';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { LinearGradient } from 'expo-linear-gradient';
 import React, { useEffect, useState } from 'react';
-import { Dimensions, Image, StyleSheet } from 'react-native';
+import { Dimensions, StyleSheet } from 'react-native';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import Animated, { useAnimatedStyle, useSharedValue } from 'react-native-reanimated';
 
@@ -29,8 +29,6 @@ export default function TeamImage() {
 
     const [showHideGradient, setShowHideGradient] = useState(true)
 
-    const showaa = useSharedValue(true)
-
     useEffect(() => {
     
     }, [imgSrc ]);
@@ -43,7 +41,7 @@ export default function TeamImage() {
             onPress: () => pickImage(),
         },
         {
-            label: 'Shwo/Hide Gradient',
+            label: 'Show/Hide Gradient',
             icon: () => <MaterialIcons name="hide-image" size={24} color="white" />,
             onPress: () => toogleGradient(),
         },
@@ -55,7 +53,7 @@ export default function TeamImage() {
 
     const select = Gesture.Tap().runOnJS(true).onEnd(() => {
         setActions(actions)
-    });
+    }); 
 
     const dragGesture = Gesture.Pan()
         .onChange(event => {
@@ -89,26 +87,29 @@ export default function TeamImage() {
     });
 
     return (
-        <>
-            <GestureDetector gesture={Gesture.Exclusive(dragGesture, select)}>
-                <Animated.View style={[dragStyle, { top: 0 }]}>
-                    <GestureDetector gesture={pinchGesture}>
-                        <Animated.View style={scaleStyle}>
-                             { imgSrc ? (
-                            <Image source={{ uri: imgSrc }} resizeMode="contain" style={{ width: captureWidth, height: captureWidth }} alt={"img"} />
-                            ): null}
-                            { showHideGradient ? (
+        <GestureDetector gesture={Gesture.Exclusive(dragGesture, select)}>
+            <Animated.View style={[dragStyle, { top: 0 }]}>
+                <GestureDetector gesture={pinchGesture}>
+                    <Animated.View style={scaleStyle}>
+                        {imgSrc && (
+                            <Animated.Image 
+                                source={{ uri: imgSrc }} 
+                                resizeMode="contain" 
+                                style={{ width: captureWidth, height: captureWidth}} 
+                                alt="img" 
+                            />
+                        )}
+                        {showHideGradient && (
                             <LinearGradient
                                 colors={['transparent', 'rgba(0,0,0,0.6)']}
                                 style={styles.gradient}
                                 pointerEvents="none"
                             />
-                            ): null}
-                        </Animated.View>
-                    </GestureDetector>
-                </Animated.View>
-            </GestureDetector>
-        </>
+                        )}
+                    </Animated.View>
+                </GestureDetector>
+            </Animated.View>
+        </GestureDetector>
     );
 }
 
@@ -126,4 +127,7 @@ const styles = StyleSheet.create({
         top: 0,
         bottom: 0,
     },
+    scaleStyle : {
+        position: 'absolute',
+    }
 });

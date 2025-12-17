@@ -16,8 +16,8 @@ export default function Affiche() {
 
 
     return (
-        <AfficheBase isResultat={false}>
-            <React.Fragment >
+        <AfficheBase verticalText={"AFFICHE DU WEEKEND"} showVertialText={true}>
+            <View style={styles.child}>
                 <MovableText text={matchProps.Competition} />
                 <MovableView initialPosition={80}>
                     <AfficheCard matchesData={matchProps} ></AfficheCard>
@@ -28,7 +28,7 @@ export default function Affiche() {
                         <Text style={styles.text_date}>{matchProps.Time}</Text>
                     </View>
                 </MovableView>
-            </React.Fragment>
+            </View>
         </AfficheBase>
     );
 }
@@ -42,5 +42,11 @@ const styles = StyleSheet.create({
         fontSize: 20,
         color: 'white',
         textAlign: 'right'
+    }, 
+    child: { 
+        flex:1,
+        width:screenWidth,
+        position: 'absolute',
+        top: 1
     }
 });

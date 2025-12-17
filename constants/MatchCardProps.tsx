@@ -11,10 +11,12 @@ export type PlateauCardProps = {
     Logo: ImageURISource;
     Time: string
     Location: string
+    CompetitionID: number;
 };
 
 export type MatchCardProps = {
     Competition: string;
+    CompetitionID: number;
     DisplayDate: string;
     home: string;
     away: string;

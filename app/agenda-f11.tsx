@@ -1,12 +1,9 @@
 import AgendaComponent from '@/components/agenda-component';
-import { HStack } from '@/components/ui/hstack';
-import { Switch } from '@/components/ui/switch';
-import { Text } from '@/components/ui/text';
 import { useAppStore } from '@/constants/filter';
 import { MatchCardProps } from '@/constants/MatchCardProps';
 import { ReadDB } from '@/hooks/firebase';
 import React, { useEffect, useState } from 'react';
-import { ActivityIndicator, ImageBackground, StyleSheet, View } from 'react-native';
+import { ActivityIndicator, ImageBackground, StyleSheet, Switch, Text, View } from 'react-native';
 
 const backgroundImg = require('../assets/images/0.jpg');
 
@@ -35,26 +32,27 @@ export default function AgendaF11() {
   };
 
   useEffect(() => {
-      setLoading(true)
-      if (date != null) // can be better
+      if (date) {
+        setLoading(true)
         fetchMatches();
+      }
 
-  }, [date, homeFilter]); // will force the refresh is date is updated
+  }, [date, homeFilter]); // will force the refresh if date is updated
 
 
   return (
       <View style={styles.container} >
         <ImageBackground source={backgroundImg} resizeMode="stretch" style={styles.image}>
           <View style={styles.container}>
-            <HStack style={styles.hstack} space="md">
+            <View style={styles.vstack}>
               <Switch
                 trackColor={{ false: '#d4d4d4', true: '#0f4d03ff' }}
                 thumbColor="#fafafa"
                 value = {homeFilter}
-                onToggle= {() => filter()}
+                onValueChange= {() => filter()}
               />
-              <Text size="md">Matchs à domicile uniquement</Text>
-            </HStack>
+              <Text style={{color:"white"}}>Matchs à domicile uniquement</Text>
+            </View>
             {loading ? (
               <ActivityIndicator size="large" />
             ) : (
@@ -80,7 +78,9 @@ const styles = StyleSheet.create({
   image: {
     flex: 1
   },
-  hstack: {
-    marginLeft: 30
+  vstack: {
+    marginLeft: 30,
+    flexDirection: "row",
+    gap:10
   }
 });

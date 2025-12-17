@@ -34,17 +34,38 @@ const ActionSheetCustom = forwardRef((props, ref) => {
         )
         actionSheetRef.current?.hide();
     }
+    const program = () => {
+        // Navigation logic to Resultat screen
+        router.push({
+            pathname: '/program'
+        }
+        )
+        actionSheetRef.current?.hide();
+    }
+    const classement = () => {
+        // Navigation logic to Resultat screen
+        router.push({
+            pathname: '/team-classement'
+        }
+        )
+        actionSheetRef.current?.hide();
+    }
+
+
 
     return (
-        <>
+        <View>
 
             <ActionSheet ref={actionSheetRef} containerStyle={{ backgroundColor: 'black' }} >
                 <View style={styles.container}>
                     <AntDesign.Button name="file-text" backgroundColor='black' size={24} color="white" onPress={affiche}>Generate Affiche</AntDesign.Button>
                     <AntDesign.Button name="trophy" backgroundColor='black' size={24} color="white" onPress={resultat}>Generate Resultat</AntDesign.Button>
+                    <AntDesign.Button name="menu" backgroundColor='black' size={24} color="white" onPress={program}>Generate Program</AntDesign.Button>
+                    <AntDesign.Button name="menu" backgroundColor='black' size={24} color="white" onPress={classement}>Generate Classement</AntDesign.Button>
+
                 </View>
             </ActionSheet>
-        </>
+        </View>
     )
 })
 // Styles
@@ -56,7 +77,7 @@ const styles = StyleSheet.create({
         color: 'white',
         backgroundColor: 'black',
         minHeight:300, 
-        marginBottom:150
+        marginBottom:250
     }
 });
 

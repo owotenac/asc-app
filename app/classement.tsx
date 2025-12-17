@@ -1,4 +1,5 @@
 import { useAppStore } from '@/constants/filter';
+import { getClassement } from '@/hooks/firebase';
 import React, { useEffect, useState } from 'react';
 import { ActivityIndicator, ImageBackground, RefreshControl, ScrollView, StyleSheet, Text, View } from 'react-native';
 
@@ -14,47 +15,29 @@ export default function Classement() {
 
     const API_URL = `https://api-dofa.fff.fr/api/compets/${categoryProps.cp_no}/phases/${categoryProps.cp_phase}/poules/${categoryProps.cp_poule}/classement_journees?page=1`;
 
-    const fetchData = async () => {
+        const fetchCalendrier = async () => {
         try {
-            setError(null);
-            const response = await fetch(API_URL, {
-                headers: {
-                    'Accept': 'application/json',
-                },
-            });
-            if (!response.ok) {
-                setError(`${response.status}`)
-            }
-            else {
-                const jsonData = await response.json();
-                // Handle different response structures
-                if (Array.isArray(jsonData)) {
-                    setData(jsonData);
-                } else if (jsonData.data && Array.isArray(jsonData.data)) {
-                    setData(jsonData.data);
-                } else if (jsonData.classement && Array.isArray(jsonData.classement)) {
-                    setData(jsonData.classement);
-                } else {
-                    console.log('Unexpected API response structure:', jsonData);
-                    setError('Invalid data format received from API');
-                    setData(null);
-                }
-            }
-        } catch (err) {
-            setError(`${err}`);         
-        } finally {
-             setLoading(false);
-            setRefreshing(false);
+            const d = await getClassement(API_URL) 
+            setData ( d );
+            if (d)
+                setLoading(false)
         }
+       catch (error) {
+            console.error("Error fetching matches:", error);
+        }
+
     };
 
     useEffect(() => {
-        fetchData();
+        //get the classement
+        if (!data) {
+            fetchCalendrier()
+        }
     }, []);
 
     const onRefresh = () => {
         setRefreshing(true);
-        fetchData();
+        fetchCalendrier();
     };
 
     if (loading) {

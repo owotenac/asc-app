@@ -43,7 +43,6 @@ export default function RootLayout() {
             TabBarTheme
           }>
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          <Stack.Screen name="category" options={{ headerShown: true, title: "Catégories" }} />
           <Stack.Screen name="resultat" options={{
             headerShown: true,
             title: "Résultats du Week end",
@@ -55,6 +54,10 @@ export default function RootLayout() {
             headerShown: true,
             title: "Affiche du Week end",
           }} />
+          <Stack.Screen name="sponsors" options={{ headerShown: true, title: "Sponsors" }} />
+          <Stack.Screen name="program" options={{ headerShown: true, title: "Programme" }} />
+          <Stack.Screen name="team-selection" options={{ headerShown: true, title: "Select Teams" }} />
+          <Stack.Screen name="team-classement" options={{ headerShown: true, title: "Select Classement" }} />
         </Stack>
         <StatusBar style="dark" />
       </ThemeProvider>

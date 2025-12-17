@@ -57,10 +57,10 @@ export const Fonts = Platform.select({
 
 export const TabBarTheme = {
   headerStyle: {
-    backgroundColor: '#ffffffff',
+    backgroundColor: asc_background//'#ffffffff',
   },
   headerShadowVisible: false,
-  headerTintColor: '#000000ff',
+  headerTintColor: '#ffffffff',
   tabBarStyle: {
     backgroundColor: '#ffffffff',
   },
@@ -69,28 +69,5 @@ export const TabBarTheme = {
 }
 
 export const global_styles = StyleSheet.create({
-    text_vertical: {
-        color: '#ffffff40',
-        fontSize: 35,
-        textAlign: "center",
-        transformOrigin: 'center',
-        fontFamily: 'LatoItalic'
-    },
-        captureArea: {
-        position: 'absolute',
-        borderColor: 'white',
-        backgroundColor: 'transparent',
-        borderWidth: 1,
-        top: screenWidth / 0.8,
-        height: 1,
-        width: '100%'
-    },
-    left_box: {
-        position: 'absolute',
-        top: 250,
-        left:(-screenHeight / 2) + 55,
-        width: screenHeight,
-        height: 100,
-        transform: [{ rotate: '-90deg' }],
-    }    
+
   })

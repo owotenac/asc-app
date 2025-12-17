@@ -1,9 +1,8 @@
-import { Pressable } from '@/components/ui/pressable';
 import { CategoryProps } from '@/constants/CategoryProps';
 import { useAppStore } from '@/constants/filter';
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import { useRouter } from 'expo-router';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 
 export function TeamCard(props: CategoryProps) {
@@ -18,7 +17,7 @@ export function TeamCard(props: CategoryProps) {
         );
     }
     return (
-        <Pressable 
+        <TouchableOpacity 
         onPress={() => openDetails()
         }>
             <View style={styles.team_card}>
@@ -28,7 +27,7 @@ export function TeamCard(props: CategoryProps) {
                 </View>
                     <Text style={styles.text_poule}>Phase {props.cp_phase} - {props.cp_poule_name}</Text>                
             </View>
-        </Pressable>
+        </TouchableOpacity>
     )
 }
 
@@ -49,10 +48,10 @@ const styles = StyleSheet.create({
     team_card: {
         flex: 1,
         flexDirection: "column",
-        backgroundColor: '#49704dff',
+        backgroundColor: '#000000ff',
         padding: 15,
         margin: 5,
-        borderRadius: 10,
+        borderRadius: 5,
         //borderWidth:1,
         //borderBottomColor: "white"
     },

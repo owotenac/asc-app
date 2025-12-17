@@ -8,7 +8,7 @@ type ImageState = {
 };
 
 export const useImageStore = create<ImageState>((set) => ({
-    imgSrc: "",
+    imgSrc: "https://res.cloudinary.com/dmx5bbziq/image/upload/v1765895769/black_hlaa2x.png",
     setImgSrc: (img: string) => set({imgSrc: img})
 }));
 

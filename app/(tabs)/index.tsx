@@ -29,7 +29,8 @@ export default function StartScreen() {
      
     };
 
-    fetchTeam();
+    if (team.length == 0 )
+      fetchTeam();
   }, []);
 
   return (
