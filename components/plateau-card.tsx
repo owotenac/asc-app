@@ -2,11 +2,11 @@ import { PlateauCardProps } from '@/constants/MatchCardProps';
 import { Image } from 'expo-image';
 import { StyleSheet, Text, View } from 'react-native';
 
-type LocalMatchCardProps = {
+type LocalPlateauCardProps = {
     match : PlateauCardProps
 }
 
-const MatchCard: React.FC<LocalMatchCardProps> = ( {match }) => {
+const PlateauCard: React.FC<LocalPlateauCardProps> = ( {match }) => {
 
     return (
         <View style={styles.match_card}>
@@ -77,4 +77,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default MatchCard;
+export default PlateauCard;

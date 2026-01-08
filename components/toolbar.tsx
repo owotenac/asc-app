@@ -1,6 +1,10 @@
 import { useToolBarStore } from '@/constants/toolbarprovider';
 import React from 'react';
-import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import { Dimensions, StyleSheet, TouchableOpacity, View } from 'react-native';
+
+const { height: screenHeight, width: screenWidth } = Dimensions.get('window');
+const captureWidth = screenWidth;
+const captureHeight = (screenWidth / 4) * 5; // 4:5 ratio
 
 export default function Toolbar() {
 
@@ -15,6 +19,9 @@ export default function Toolbar() {
                 style={{
                   backgroundColor: 'black',
                   padding: 10,
+                  borderColor: 'white',
+                  borderWidth: 2,
+                  borderRadius: 30
                 }}
               >
                {action.icon()} 
@@ -26,18 +33,18 @@ export default function Toolbar() {
 
 const styles = StyleSheet.create({
   statusBar: {
-    backgroundColor: 'black',
-    height: 80,
+    //backgroundColor: 'black',
+    //height: 80,
     //flex: 1,
-    flexDirection: 'row',
+    flexDirection: 'column',
     //padding: 20,
     //margin: 10,
-    //gap: 20,
+    gap: 50,
     alignItems: 'center',
     justifyContent: 'space-around',
     position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
+    top: 200,
+    left: captureWidth - 60,
+    //right: 0,
   },
 })

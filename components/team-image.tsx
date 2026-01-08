@@ -42,7 +42,7 @@ export default function TeamImage() {
         },
         {
             label: 'Show/Hide Gradient',
-            icon: () => <MaterialIcons name="hide-image" size={24} color="white" />,
+            icon: () => <MaterialIcons name="rotate-90-degrees-cw" size={24} color="white" />,
             onPress: () => toogleGradient(),
         },
 
@@ -99,13 +99,11 @@ export default function TeamImage() {
                                 alt="img" 
                             />
                         )}
-                        {showHideGradient && (
                             <LinearGradient
-                                colors={['transparent', 'rgba(0,0,0,0.6)']}
-                                style={styles.gradient}
+                                colors={['rgba(0,0,0,0.6)', 'transparent', 'transparent', 'rgba(0,0,0,0.6)']}
+                                style={showHideGradient? styles.gradient : styles.gradient_vertical}
                                 pointerEvents="none"
                             />
-                        )}
                     </Animated.View>
                 </GestureDetector>
             </Animated.View>
@@ -122,10 +120,22 @@ const styles = StyleSheet.create({
     },
     gradient: {
         position: 'absolute',
+        flex:1,
         left: 0,
         right: 0,
         top: 0,
         bottom: 0,
+                //transform: [{ rotate: '-90deg' }],
+    },
+    gradient_vertical: {
+        position: 'absolute',
+        flex:1,
+        left: 0,
+        right: 0,
+        top: 0,
+        bottom: 0,
+                transform: [{ rotate: '-90deg' }],
+
     },
     scaleStyle : {
         position: 'absolute',
