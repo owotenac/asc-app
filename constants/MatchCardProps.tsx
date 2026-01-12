@@ -17,6 +17,7 @@ export type PlateauCardProps = {
 export type MatchCardProps = {
     Competition: string;
     CompetitionID: number;
+    MatchNumber: number;
     DisplayDate: string;
     home: string;
     away: string;
