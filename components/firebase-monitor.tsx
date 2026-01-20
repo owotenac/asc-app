@@ -89,6 +89,8 @@ const FirebaseStatusMonitor = () => {
 
 
   const startComputation = async (url: string) => {
+    if (isRunning)
+      return
     try {
       setIsRunning(true);
       clearLogs();

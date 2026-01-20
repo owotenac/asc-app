@@ -25,14 +25,15 @@ const firestoreRealtimeDB: Database = getDatabase(firebaseApp);
 export { firebaseApp, firestoreDB, firestoreRealtimeDB };
 
 
-export async function ReadTeamAgenda(cpId: number) {
+export async function ReadTeamAgenda(category: CategoryProps) {
 
     try {
 
         //const analytics = getAnalytics(app);
         const dbcollection = collection(firestoreDB, "f11")
         const q = query(dbcollection,
-            where('CompetitionID', '==', cpId),
+            where('CompetitionID', '==', category.cp_no),
+            where('CompetitionPhase', '==', category.cp_phase),
             orderBy('Date', 'asc'),
             limit(30),);
         const querySnapshot = await getDocs(q);
@@ -186,7 +187,7 @@ export async function ReadTeam() {
     try {
         const dbcollection = collection(firestoreDB, "team")
 
-        const q = query(dbcollection, limit(20),);
+        const q = query(dbcollection, orderBy('cp_name', 'asc'), limit(20),);
         const querySnapshot = await getDocs(q);
 
         const results = querySnapshot.docs.map(doc => ({
