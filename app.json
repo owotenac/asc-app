@@ -1,11 +1,11 @@
 {
   "expo": {
     "name": "AS Canet",
-    "slug": "district_publication",
+    "slug": "AS Canet",
     "version": "1.1.0",
     "orientation": "portrait",
     "icon": "./assets/images/logo.png",
-    "scheme": "districtpublication",
+    "scheme": "ascanet",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {

@@ -27,9 +27,9 @@ const AfficheCard: React.FC<AfficheCardProps> = ({ matchesData }) => {
     ];
 
 
-const changeStyle = () => {
-    setAfficheStyle(afficheStyle === 'style1' ? 'style2' : 'style1');
-};
+    const changeStyle = () => {
+        setAfficheStyle(afficheStyle === 'style1' ? 'style2' : 'style1');
+    };
 
     return (
         <TouchableOpacity onPress={() => setActions(actions)}>
@@ -47,14 +47,14 @@ const changeStyle = () => {
                 </View>
             ) : (
                 <View style={styles.global_box_row}>
-                        <View style={styles.logo_box_column}>
-                            <Text style={[styles.text_team]}>{matchesData?.home}</Text>
-                            <Text style={[styles.text_team]}>{matchesData?.away}</Text>
-                        </View>
+                    <View style={styles.logo_box_column}>
+                        <Text style={[styles.text_team]}>{matchesData?.home}</Text>
+                        <Text style={[styles.text_team]}>{matchesData?.away}</Text>
+                    </View>
                     <View style={styles.logo_box_row}>
                         <Image source={matchesData.homeIcon_alpha} style={styles.logo_match_row} />
                         <Image source={matchesData.awayIcon_alpha} style={styles.logo_match_row} />
-                    </View>                        
+                    </View>
                 </View>
             )
 
@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         flex: 1,
         alignItems: 'flex-start',
-    }    ,
+    },
     text_team: {
         fontSize: 25,
         fontWeight: 600,
@@ -119,7 +119,7 @@ const styles = StyleSheet.create({
         width: 60,
         height: 60,
         margin: 15
-    },    
+    },
 })
 
 export default AfficheCard;
