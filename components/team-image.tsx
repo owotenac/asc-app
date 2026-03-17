@@ -10,8 +10,8 @@ import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import Animated, { useAnimatedStyle, useSharedValue } from 'react-native-reanimated';
 
 
-const { height: screenHeight, width: screenWidth } = Dimensions.get('window');
-const captureWidth = screenWidth;
+const { width: screenWidth } = Dimensions.get('window');
+const captureWidth = screenWidth + 150;
 const captureHeight = (screenWidth / 4) * 5; // 4:5 ratio
 
 export default function TeamImage() {
@@ -25,13 +25,13 @@ export default function TeamImage() {
 
     const { setActions } = useToolBarStore();
 
-    const {imgSrc, setImgSrc} = useImageStore();
+    const { imgSrc, setImgSrc } = useImageStore();
 
     const [showHideGradient, setShowHideGradient] = useState(true)
 
     useEffect(() => {
-    
-    }, [imgSrc ]);
+
+    }, [imgSrc]);
 
     // Set toolbar actions 
     const actions: Action[] = [
@@ -53,7 +53,7 @@ export default function TeamImage() {
 
     const select = Gesture.Tap().runOnJS(true).onEnd(() => {
         setActions(actions)
-    }); 
+    });
 
     const dragGesture = Gesture.Pan()
         .onChange(event => {
@@ -92,18 +92,26 @@ export default function TeamImage() {
                 <GestureDetector gesture={pinchGesture}>
                     <Animated.View style={scaleStyle}>
                         {imgSrc && (
-                            <Animated.Image 
-                                source={{ uri: imgSrc }} 
-                                resizeMode="contain" 
-                                style={{ width: captureWidth, height: captureWidth}} 
-                                alt="img" 
+                            <Animated.Image
+                                source={{ uri: imgSrc }}
+                                resizeMode="contain"
+                                style={{ width: captureWidth, height: captureHeight }}
+                                alt="img"
                             />
                         )}
+                        {!showHideGradient ?
                             <LinearGradient
-                                colors={['rgba(0,0,0,0.6)', 'transparent', 'transparent', 'rgba(0,0,0,0.6)']}
-                                style={showHideGradient? styles.gradient : styles.gradient_vertical}
+                                colors={['rgba(0,0,0,0.35)','rgba(0,0,0,0.35)']}
+                                style={[styles.gradient_vertical, { width: captureWidth, height: captureHeight }]}
                                 pointerEvents="none"
                             />
+                            :
+                            <LinearGradient
+                                colors={['rgba(0,0,0,0.7)', 'transparent', 'transparent', 'rgba(0,0,0,0.7)']}
+                                style={[styles.gradient, { width: captureWidth, height: captureHeight }]}
+                                pointerEvents="none"
+                            />
+                        }
                     </Animated.View>
                 </GestureDetector>
             </Animated.View>
@@ -120,24 +128,24 @@ const styles = StyleSheet.create({
     },
     gradient: {
         position: 'absolute',
-        flex:1,
+        flex: 1,
         left: 0,
         right: 0,
         top: 0,
         bottom: 0,
-                //transform: [{ rotate: '-90deg' }],
+        //transform: [{ rotate: '-90deg' }],
     },
     gradient_vertical: {
         position: 'absolute',
-        flex:1,
+        flex: 1,
         left: 0,
         right: 0,
         top: 0,
         bottom: 0,
-                transform: [{ rotate: '-90deg' }],
+        transform: [{ rotate: '-90deg' }],
 
     },
-    scaleStyle : {
+    scaleStyle: {
         position: 'absolute',
     }
 });

@@ -5,4 +5,5 @@ export type CategoryProps = {
     cp_phase: number;
     cp_poule: number;
     cp_poule_name: string
+    current : boolean
 };

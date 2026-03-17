@@ -63,6 +63,7 @@ export const TabBarTheme = {
   headerTintColor: '#ffffffff',
   tabBarStyle: {
     backgroundColor: '#ffffffff',
+    color:'black'
   },
   headerShown: true,
   

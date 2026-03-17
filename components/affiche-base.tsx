@@ -9,7 +9,7 @@ import Entypo from '@expo/vector-icons/Entypo';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 
 import React, { ReactNode, useEffect, useRef } from 'react';
-import { Dimensions, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Dimensions, Pressable, StyleSheet, View } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import ViewShot from 'react-native-view-shot';
@@ -109,11 +109,11 @@ const AfficheBase = ({ children, verticalText, showVertialText, actionToAdd, sho
                         <TeamImage />
                         ):null
                         }
-                        {showVertialText ? (
+                        {/* {showVertialText ? (
                             <View style={styles.left_box}>
                                 <Text style={styles.text_vertical}>{verticalText}</Text>
                             </View>
-                        ) : null}
+                        ) : null} */}
 
                         {children}
 

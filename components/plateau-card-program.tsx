@@ -3,22 +3,22 @@ import { Image } from 'expo-image';
 import { StyleSheet, Text, View } from 'react-native';
 
 type LocalPlateauCardProps = {
-    match : PlateauCardProps
+    match: PlateauCardProps
 }
 
-const PlateauCardProgram: React.FC<LocalPlateauCardProps> = ( {match }) => {
+const PlateauCardProgram: React.FC<LocalPlateauCardProps> = ({ match }) => {
 
     return (
         <View style={styles.match_card}>
 
-                    <View style={styles.view_category}>
-                        <Text style={styles.text_category}>{match.Competition}</Text>
-                    </View>
+            <View style={styles.view_category}>
+                <Text style={styles.text_category}>{match.Competition}</Text>
+            </View>
 
             <View style={styles.view_date}>
                 <Text style={styles.text_date}>{match.DisplayDate} - {match.Time}</Text>
             </View>
-                    <View style={styles.line}></View>
+            <View style={styles.line}></View>
             <View style={styles.view_match}>
                 <Image source={match.Logo} style={styles.logo_match} />
                 <Text style={styles.text_match}>{match.Location}</Text>
@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
     },
     text_date: {
         color: '#ffffffff',
-        fontSize: 12,
+        fontSize: 15,
         margin: 5
     },
     view_match: {
@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
     },
     text_match: {
         fontSize: 15,
-                color: '#ffffffff',
+        color: '#ffffffff',
     },
     logo_match: {
         width: 30,

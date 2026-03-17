@@ -1,9 +1,7 @@
 
-import { useAppStore } from '@/constants/filter';
 import { asc_background } from "@/constants/theme";
-import { useRouter } from 'expo-router';
 import React from 'react';
-import { StyleSheet, Text, useWindowDimensions, View } from 'react-native';
+import { StyleSheet, useWindowDimensions } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { SceneMap, TabBar, TabView } from 'react-native-tab-view';
 
@@ -25,9 +23,6 @@ const routes = [
 export default function TeamDetails() {
     const layout = useWindowDimensions();
     const [index, setIndex] = React.useState(0);
-    const { categoryProps } = useAppStore();
-
-    const router = useRouter();
 
     const tabChange = (index: number) => {
         setIndex(index)
@@ -37,10 +32,6 @@ export default function TeamDetails() {
 
         <SafeAreaProvider>
             <SafeAreaView style={styles.container}>
-                <View style={styles.header}>
-                    <Text style={styles.text_team}>{categoryProps.cp_name}</Text>
-                </View>
-
                 <TabView style={styles.tabview}
                     navigationState={{ index, routes }}
                     renderScene={renderScene}

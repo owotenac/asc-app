@@ -1,9 +1,7 @@
 import { useAppStore } from '@/constants/filter';
 import { getClassement } from '@/hooks/firebase';
 import React, { useEffect, useState } from 'react';
-import { ActivityIndicator, ImageBackground, RefreshControl, ScrollView, StyleSheet, Text, View } from 'react-native';
-
-const backgroundImg = require('../assets/images/0.jpg');
+import { ActivityIndicator, RefreshControl, ScrollView, StyleSheet, Text, View } from 'react-native';
 
 export default function Classement() {
 
@@ -67,7 +65,7 @@ export default function Classement() {
     }
 
     return (
-         <ImageBackground source={backgroundImg} resizeMode="stretch" style={styles.image}>
+         <View style={styles.back}>
         <ScrollView
             style={styles.container}
             refreshControl={
@@ -123,7 +121,7 @@ export default function Classement() {
                 </View>
             </ScrollView>
         </ScrollView >
-        </ImageBackground>
+        </View>
     );
 };
 
@@ -141,8 +139,9 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         padding: 20,
     },
-      image: {
+      back: {
     flex: 1,
+    backgroundColor: '#000000ff',
    },
     header: {
         backgroundColor: '#0066cc',

@@ -3,9 +3,7 @@ import { useAppStore } from '@/constants/filter';
 import { MatchCardProps } from '@/constants/MatchCardProps';
 import { ReadDB } from '@/hooks/firebase';
 import React, { useEffect, useState } from 'react';
-import { ActivityIndicator, ImageBackground, StyleSheet, Switch, Text, View } from 'react-native';
-
-const backgroundImg = require('../assets/images/0.jpg');
+import { ActivityIndicator, StyleSheet, Switch, Text, View } from 'react-native';
 
 export default function AgendaF11() {
   const { date } = useAppStore();
@@ -42,7 +40,6 @@ export default function AgendaF11() {
 
   return (
       <View style={styles.container} >
-        <ImageBackground source={backgroundImg} resizeMode="stretch" style={styles.image}>
           <View style={styles.container}>
             <View style={styles.vstack}>
               <Switch
@@ -63,7 +60,6 @@ export default function AgendaF11() {
               />
             )}
           </View>
-        </ImageBackground>
       </View>
 
   );
@@ -73,7 +69,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
-    marginTop: 10
+    marginTop: 10,
+    backgroundColor: '#000000ff',
   },
   image: {
     flex: 1

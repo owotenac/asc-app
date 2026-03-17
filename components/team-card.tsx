@@ -48,10 +48,10 @@ const styles = StyleSheet.create({
     team_card: {
         flex: 1,
         flexDirection: "column",
-        backgroundColor: '#000000ff',
+        backgroundColor: 'rgb(14, 53, 6)',
         padding: 15,
         margin: 5,
-        borderRadius: 5,
+        borderRadius: 15,
         //borderWidth:1,
         //borderBottomColor: "white"
     },

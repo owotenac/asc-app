@@ -20,22 +20,22 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: 'AS Canet Saison 25/26',
-          tabBarIcon: ({ color }) => <AntDesign name="team" size={24} color={color} /> ,
+          title: 'AS Canet Saison 2025 / 2026',
+          tabBarIcon: ({ color }) => <AntDesign name="team" size={24} color={'black'} /> ,
         }}
       />
       <Tabs.Screen
         name="full-agenda"
         options={{
           title: 'Agenda',
-          tabBarIcon: ({ color }) => <Entypo name="calendar" size={24} color={color} />,
+          tabBarIcon: ({ color }) => <Entypo name="calendar" size={24} color={'black'} />,
         }}
       />
       <Tabs.Screen
         name="admin"
         options={{
           title: 'Admin',
-          tabBarIcon: ({ color }) => <AntDesign name="menu" size={24} color={color} /> 
+          tabBarIcon: ({ color }) => <AntDesign name="menu" size={24} color={'black'} /> 
         }}
       />
 

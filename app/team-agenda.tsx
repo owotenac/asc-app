@@ -1,12 +1,11 @@
 import AgendaComponent from '@/components/agenda-component';
 import { MatchCardProps } from '@/constants/MatchCardProps';
-import { ActivityIndicator, ImageBackground, StyleSheet, View } from 'react-native';
+import { ActivityIndicator, StyleSheet, View } from 'react-native';
 
 import { useAppStore } from '@/constants/filter';
 import { ReadTeamAgenda } from '@/hooks/firebase';
+import { Stack } from 'expo-router';
 import React, { useEffect, useState } from 'react';
-
-const backgroundImg = require('../assets/images/0.jpg');
 
 export default function TeamAgenda() {
   const [matches, setMatches] = useState<MatchCardProps[]>([]);
@@ -34,7 +33,11 @@ export default function TeamAgenda() {
 
 
   return (
-        <ImageBackground source={backgroundImg} resizeMode="stretch" style={styles.image}>
+    <>
+    {categoryProps && 
+      <Stack.Screen options={{ title: categoryProps.cp_name }} />
+    }
+        <View style={styles.back}>
           <View style={styles.container}>
             {loading ? (
               <ActivityIndicator size="large" />
@@ -46,7 +49,8 @@ export default function TeamAgenda() {
               />
             )}
           </View>
-        </ImageBackground>
+        </View>
+    </>        
   );
 }
 
@@ -57,7 +61,8 @@ const styles = StyleSheet.create({
     //alignItems: 'center',
         //justifyContent: "center"
   },
-  image: {
+  back: {
     flex: 1,
+    backgroundColor: '#000000ff',
    }
 });

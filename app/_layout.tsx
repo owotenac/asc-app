@@ -28,12 +28,6 @@ export default function RootLayout() {
   }
   )
 
-
-  const openMenu = () => {
-    console.log("Menu")
-  }
-
-
   return (
 
     <GluestackUIProvider mode="dark">

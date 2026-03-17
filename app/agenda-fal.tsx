@@ -3,9 +3,7 @@ import { useAppStore } from '@/constants/filter';
 import { PlateauCardProps } from '@/constants/MatchCardProps';
 import { ReadDBPlateau } from '@/hooks/firebase';
 import React, { useEffect, useState } from 'react';
-import { ActivityIndicator, ImageBackground, StyleSheet, View } from 'react-native';
-
-const backgroundImg = require('../assets/images/0.jpg');
+import { ActivityIndicator, StyleSheet, View } from 'react-native';
 
 export default function AgendaFAL() {
   const { date } = useAppStore();
@@ -40,7 +38,6 @@ export default function AgendaFAL() {
 
   return (
       <View style={styles.container} >
-        <ImageBackground source={backgroundImg} resizeMode="stretch" style={styles.image}>
           <View style={styles.container}>
             {loading ? (
               <ActivityIndicator size="large" />
@@ -52,7 +49,6 @@ export default function AgendaFAL() {
               />
             )}
           </View>
-        </ImageBackground>
       </View>
   );
 }
@@ -60,7 +56,8 @@ export default function AgendaFAL() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: 'column'
+    flexDirection: 'column',
+    backgroundColor: '#000000ff',
   },
   image: {
     flex: 1
