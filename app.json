@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "AS Canet",
-    "slug": "AS Canet",
+    "slug": "ASCanet",
     "version": "1.1.0",
     "orientation": "portrait",
     "icon": "./assets/images/logo.png",
@@ -44,7 +44,7 @@
         "expo-splash-screen",
         {
           "image": "./assets/images/logo.png",
-          "imageWidth": 200,
+          "imageWidth": 300,
           "resizeMode": "contain",
           "backgroundColor": "#ffffff",
           "dark": {

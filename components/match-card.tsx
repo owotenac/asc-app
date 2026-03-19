@@ -132,7 +132,8 @@ const styles = StyleSheet.create({
     dateTime: {
         color: 'rgba(224, 224, 224, 0.77)',
         fontSize: 12,
-        textTransform: 'uppercase'
+        textTransform: 'uppercase',
+        marginBottom: 10
     },
     // Match row
     matchRow: {
