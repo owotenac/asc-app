@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "AS Canet",
-    "slug": "ASCanet",
+    "slug": "ascanet",
     "version": "1.1.0",
     "orientation": "portrait",
     "icon": "./assets/images/logo.png",
@@ -20,7 +20,15 @@
       },
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false,
-      "package": "com.district_pub"
+      "package": "com.e2digitalstudio.ascanet",
+      "permissions": [
+        "android.permission.READ_EXTERNAL_STORAGE",
+        "android.permission.WRITE_EXTERNAL_STORAGE",
+        "android.permission.READ_MEDIA_VISUAL_USER_SELECTED",
+        "android.permission.ACCESS_MEDIA_LOCATION",
+        "android.permission.READ_MEDIA_IMAGES",
+        "android.permission.READ_MEDIA_AUDIO"
+      ]
     },
     "web": {
       "output": "static",
@@ -34,7 +42,7 @@
           "savePhotosPermission": "Allow $(PRODUCT_NAME) to save photos.",
           "isAccessMediaLocationEnabled": true,
           "granularPermissions": [
-            "photo", 
+            "photo",
             "audio"
           ]
         }
@@ -62,8 +70,9 @@
     "extra": {
       "router": {},
       "eas": {
-        "projectId": "2b8bb9ad-b84d-4e74-b074-11909a237653"
+        "projectId": "5778f823-af97-4ec8-8411-8db6e3d520d3"
       }
-    }
+    },
+    "owner": "e2-digital-studio"
   }
 }
