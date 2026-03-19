@@ -10,14 +10,10 @@ const PlateauCard: React.FC<LocalPlateauCardProps> = ( {match }) => {
 
     return (
         <View style={styles.match_card}>
-                    <View style={styles.view_category}>
-                        <Text style={styles.text_category}>{match.Competition}</Text>
-                    </View>
-                    <View style={styles.line}></View>
-               
-            <View style={styles.view_date}>
-                <Text style={styles.text_date}>{match.DisplayDate} - {match.Time}</Text>
-            </View>
+                    <Text style={styles.competition} numberOfLines={1}>{match.Competition}</Text>
+                    <Text style={styles.dateTime}>{match.DisplayDate} · {match.Time}</Text>
+
+              
             <View style={styles.view_match}>
                 <Image source={match.Logo} style={styles.logo_match} />
                 <Text style={styles.text_match}>{match.Location}</Text>
@@ -38,28 +34,41 @@ const styles = StyleSheet.create({
         margin: 5
     },
     match_card: {
+        backgroundColor: '#111a13',
+        borderWidth: 0.5,
+        borderColor: '#4e6d508e',
+        borderLeftWidth: 2,
+        borderRadius: 12,
+        paddingHorizontal: 12,
+        paddingVertical: 10,
+        marginHorizontal: 16,
+        marginBottom: 12,
+        gap: 7,
+    },
+    competition: {
+        color: 'rgb(255, 255, 255)',
+        fontSize: 17,
+        fontWeight: '600',
+        letterSpacing: 0.5,
         flex: 1,
-        //backgroundColor: '#14611438',
-        justifyContent: 'center',
-        padding: 10,
-        gap: 1,
+        textAlign: "left"
     },
-    view_date: {
-        //backgroundColor: '#fff'
-    },
-    text_date: {
-        color: '#ffffffff',
-        fontSize: 16,
-        margin: 5
+    dateTime: {
+        color: 'rgba(224, 224, 224, 0.77)',
+        fontSize: 12,
+        textTransform: 'uppercase'
     },
     view_match: {
-        backgroundColor: '#ffffffff',
         flexDirection: 'row',
         justifyContent: 'flex-start',
         alignItems: 'center'
     },
     text_match: {
-        fontSize: 15
+         flex: 1,
+        color: '#ffffff',
+        fontSize: 13,
+        fontWeight: '600',
+        fontFamily: 'LatoRegular',
     },
     text_score: {
         fontSize: 20,
@@ -67,8 +76,8 @@ const styles = StyleSheet.create({
         fontFamily: 'LatoItalic'
     },
     logo_match: {
-        width: 60,
-        height: 60,
+        width: 30,
+        height: 30,
         margin: 5
     },
     line: {

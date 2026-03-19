@@ -9,28 +9,23 @@ export default function Classement() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const [refreshing, setRefreshing] = useState(false);
-    const {categoryProps} = useAppStore();
+    const { categoryProps } = useAppStore();
 
     const API_URL = `https://api-dofa.fff.fr/api/compets/${categoryProps.cp_no}/phases/${categoryProps.cp_phase}/poules/${categoryProps.cp_poule}/classement_journees?page=1`;
 
-        const fetchCalendrier = async () => {
+    const fetchCalendrier = async () => {
         try {
-            const d = await getClassement(API_URL) 
-            setData ( d );
-            if (d)
-                setLoading(false)
-        }
-       catch (error) {
+            const d = await getClassement(API_URL);
+            setData(d);
+            if (d) setLoading(false);
+        } catch (error) {
+            setLoading(false);
             console.error("Error fetching matches:", error);
         }
-
     };
 
     useEffect(() => {
-        //get the classement
-        if (!data) {
-            fetchCalendrier()
-        }
+        if (!data) fetchCalendrier();
     }, []);
 
     const onRefresh = () => {
@@ -41,207 +36,216 @@ export default function Classement() {
     if (loading) {
         return (
             <View style={styles.centerContainer}>
-                <ActivityIndicator size="large" color="#0066cc" />
-                <Text style={styles.loadingText}>Loading standings...</Text>
+                <ActivityIndicator size="large" color="#4ade80" />
             </View>
         );
     }
 
-    if (error) {
+    if (error || !data) {
         return (
             <View style={styles.centerContainer}>
-                <Text style={styles.errorText}>Error: {error}</Text>
-                <Text style={styles.errorSubtext}>Pull down to retry</Text>
+                <Text style={styles.errorText}>Données indisponibles</Text>
             </View>
         );
     }
 
-    if (!data) {
-        return (
-            <View style={styles.centerContainer}>
-                <Text style={styles.errorText}>No data available</Text>
-            </View>
-        );
-    }
+    const isCanet = (name: string) =>
+        name?.toUpperCase().includes('CANET');
+
+    const getDiffStyle = (diff: number) => {
+        if (diff > 0) return styles.diffPos;
+        if (diff < 0) return styles.diffNeg;
+        return styles.diffZero;
+    };
+
+    const formatDiff = (diff: number) =>
+        diff > 0 ? `+${diff}` : `${diff}`;
+
+    const getPosStyle = (rank: number) => {
+        if (rank === 1) return styles.pos1;
+        if (rank === 2) return styles.pos2;
+        if (rank === 3) return styles.pos3;
+        return null;
+    };
 
     return (
-         <View style={styles.back}>
-        <ScrollView
-            style={styles.container}
-            refreshControl={
-                <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-            }
-        >
-            <ScrollView horizontal showsHorizontalScrollIndicator={true}>
-                <View style={styles.tableContainer}>
-                    {/* Table Header */}
-                    <View style={styles.tableHeader}>
-                        <Text style={[styles.headerCell, styles.positionCell]}>Pos</Text>
-                        <Text style={[styles.headerCell, styles.teamCell]}>Équipe</Text>
-                        <Text style={[styles.headerCell, styles.smallCell]}>Pts</Text>
-                        <Text style={[styles.headerCell, styles.smallCell]}>J</Text>
-                        <Text style={[styles.headerCell, styles.smallCell]}>G</Text>
-                        <Text style={[styles.headerCell, styles.smallCell]}>N</Text>
-                        <Text style={[styles.headerCell, styles.smallCell]}>P</Text>
-                        <Text style={[styles.headerCell, styles.smallCell]}>BP</Text>
-                        <Text style={[styles.headerCell, styles.smallCell]}>BC</Text>
-                        <Text style={[styles.headerCell, styles.smallCell]}>Diff</Text>
-                    </View>
-                    {!loading ? (
-                        <>
-                    {data.map((item, index) => {
-                        return (
-                            <View
-                                key={`${index}-${index}`}
-                                style={[
-                                    styles.tableRow,
-                                    index % 2 === 0 ? styles.evenRow : styles.oddRow
-                                ]}
-                            >
-                                <Text style={[styles.cell, styles.positionCell]}>{item.rank}</Text>
-                                <Text style={[styles.cell, styles.teamCell]} numberOfLines={1}>
-                                    {item.equipe.short_name || 'N/A'}
-                                </Text>
-                                <Text style={[styles.cell, styles.smallCell, styles.boldCell]}>{item.point_count}</Text>
-                                <Text style={[styles.cell, styles.smallCell]}>{item.total_games_count}</Text>
-                                <Text style={[styles.cell, styles.smallCell]}>{item.won_games_count}</Text>
-                                <Text style={[styles.cell, styles.smallCell]}>{item.draw_games_count}</Text>
-                                <Text style={[styles.cell, styles.smallCell]}>{item.lost_games_count}</Text>
-                                <Text style={[styles.cell, styles.smallCell]}>{item.goals_for_count}</Text>
-                                <Text style={[styles.cell, styles.smallCell]}>{item.goals_against_count}</Text>
-                                <Text style={[styles.cell, styles.smallCell]}>
-                                    {/* {item.goals_diff > 0 ? `+${item.goals_diff}` : item.goals_diff} */}
-                                    { item.goals_for_count - item.goals_against_count }
+        <View style={styles.container}>
+            <ScrollView
+                refreshControl={
+                    <RefreshControl
+                        refreshing={refreshing}
+                        onRefresh={onRefresh}
+                        tintColor="#4ade80"
+                    />
+                }
+            >
+                {/* En-tête colonnes */}
+                <View style={styles.colHeader}>
+                    <Text style={[styles.hPos]}>Pos</Text>
+                    <Text style={[styles.hTeam]}>Équipe</Text>
+                    <Text style={[styles.hPts]}>Pts</Text>
+                    <Text style={[styles.hStat]}>J</Text>
+                    <Text style={[styles.hStat]}>G</Text>
+                    <Text style={[styles.hStat]}>N</Text>
+                    <Text style={[styles.hStat]}>P</Text>
+                    <Text style={[styles.hStat]}>BP</Text>
+                    <Text style={[styles.hStat]}>BC</Text>
+                    <Text style={[styles.hDiff]}>Diff</Text>
+                </View>
+
+                {data.map((item, index) => {
+                    const canet = isCanet(item.equipe.short_name);
+                    const diff = item.goals_for_count - item.goals_against_count;
+
+                    return (
+                        <View
+                            key={index}
+                            style={[styles.row, canet && styles.rowCanet]}
+                        >
+                            {/* Position */}
+                            <View style={[styles.posBadge, getPosStyle(item.rank)]}>
+                                <Text style={[
+                                    styles.posText,
+                                    canet && !getPosStyle(item.rank) && styles.posTextCanet,
+                                    item.rank <= 3 && styles.posTextPodium,
+                                ]}>
+                                    {item.rank}
                                 </Text>
                             </View>
-                        );
-                    })}
-                    </>
-                ): null}
-                </View>
+
+                            {/* Équipe */}
+                            <Text
+                                style={[styles.teamName, canet && styles.teamNameCanet]}
+                                numberOfLines={1}
+                            >
+                                {item.equipe.short_name || 'N/A'}
+                            </Text>
+
+                            {/* Points */}
+                            <Text style={[styles.pts, canet && styles.ptsCanet]}>
+                                {item.point_count}
+                            </Text>
+
+                            {/* Stats */}
+                            <Text style={styles.stat}>{item.total_games_count}</Text>
+                            <Text style={styles.stat}>{item.won_games_count}</Text>
+                            <Text style={styles.stat}>{item.draw_games_count}</Text>
+                            <Text style={styles.stat}>{item.lost_games_count}</Text>
+                            <Text style={styles.stat}>{item.goals_for_count}</Text>
+                            <Text style={styles.stat}>{item.goals_against_count}</Text>
+
+                            {/* Diff */}
+                            <Text style={[styles.diff, getDiffStyle(diff)]}>
+                                {formatDiff(diff)}
+                            </Text>
+                        </View>
+                    );
+                })}
             </ScrollView>
-        </ScrollView >
         </View>
     );
-};
-
+}
 
 const styles = StyleSheet.create({
-
     container: {
         flex: 1,
-        marginTop: 20
-        //backgroundColor: '#f5f5f5',
+        backgroundColor: '#0a0f0d',
+        paddingHorizontal: 16,
+        paddingTop: 12,
     },
     centerContainer: {
         flex: 1,
+        backgroundColor: '#0a0f0d',
         justifyContent: 'center',
         alignItems: 'center',
-        padding: 20,
-    },
-      back: {
-    flex: 1,
-    backgroundColor: '#000000ff',
-   },
-    header: {
-        backgroundColor: '#0066cc',
-        padding: 20,
-        alignItems: 'center',
-    },
-    title: {
-        fontSize: 24,
-        fontWeight: 'bold',
-        color: '#fff',
-        marginBottom: 5,
-    },
-    subtitle: {
-        fontSize: 14,
-        color: '#fff',
-    },
-    loadingText: {
-        marginTop: 10,
-        fontSize: 16,
-        color: '#666',
     },
     errorText: {
-        fontSize: 18,
-        color: '#cc0000',
-        textAlign: 'center',
-        marginBottom: 10,
-    },
-    errorSubtext: {
+        color: 'rgba(255,255,255,0.3)',
         fontSize: 14,
-        color: '#666',
-        textAlign: 'center',
     },
-    tableContainer: {
-        margin: 10,
-        backgroundColor: '#fff',
-        borderRadius: 8,
-        overflow: 'hidden',
-        elevation: 2,
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.1,
-        shadowRadius: 4,
-    },
-    tableHeader: {
+
+    // En-tête colonnes
+    colHeader: {
         flexDirection: 'row',
-        backgroundColor: '#333',
-        paddingVertical: 12,
-    },
-    headerCell: {
-        color: '#fff',
-        fontWeight: 'bold',
-        fontSize: 12,
-        textAlign: 'center',
-        paddingHorizontal: 4,
-    },
-    tableRow: {
-        flexDirection: 'row',
-        paddingVertical: 10,
-        borderBottomWidth: 1,
-        borderBottomColor: '#e0e0e0',
-    },
-    evenRow: {
-        backgroundColor: '#fff',
-    },
-    oddRow: {
-        backgroundColor: '#ccccccff',
-    },
-    cell: {
-        fontSize: 12,
-        textAlign: 'center',
-        paddingHorizontal: 4,
-    },
-    positionCell: {
-        width: 40,
-    },
-    teamCell: {
-        width: 150,
-        textAlign: 'left',
-        paddingLeft: 10,
-    },
-    smallCell: {
-        width: 40,
-    },
-    boldCell: {
-        fontWeight: 'bold',
-    },
-    positiveCell: {
-        color: '#00aa00',
-        fontWeight: 'bold',
-    },
-    negativeCell: {
-        color: '#cc0000',
-        fontWeight: 'bold',
-    },
-    footer: {
-        padding: 20,
         alignItems: 'center',
+        paddingHorizontal: 10,
+        paddingBottom: 8,
+        borderBottomWidth: 0.5,
+        borderBottomColor: '#1a241b',
+        marginBottom: 4,
     },
-    footerText: {
+    hPos:  { width: 28, fontSize: 10, fontWeight: '600', color: 'rgba(255,255,255,0.25)', letterSpacing: 0.5 },
+    hTeam: { flex: 1, fontSize: 10, fontWeight: '600', color: 'rgba(255,255,255,0.25)', letterSpacing: 0.5 },
+    hPts:  { width: 30, textAlign: 'center', fontSize: 10, fontWeight: '700', color: 'rgba(255,255,255,0.4)', letterSpacing: 0.5 },
+    hStat: { width: 24, textAlign: 'center', fontSize: 10, fontWeight: '600', color: 'rgba(255,255,255,0.2)', letterSpacing: 0.5 },
+    hDiff: { width: 28, textAlign: 'center', fontSize: 10, fontWeight: '600', color: 'rgba(255,255,255,0.2)', letterSpacing: 0.5 },
+
+    // Ligne
+    row: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        paddingHorizontal: 10,
+        paddingVertical: 8,
+        borderRadius: 10,
+        marginBottom: 3,
+    },
+    rowCanet: {
+        backgroundColor: 'rgba(74,222,128,0.07)',
+        borderWidth: 0.5,
+        borderColor: 'rgba(74,222,128,0.2)',
+    },
+
+    // Position
+    posBadge: {
+        width: 22, height: 22,
+        borderRadius: 6,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginRight: 6,
+    },
+    pos1: { backgroundColor: 'rgba(251,191,36,0.15)' },
+    pos2: { backgroundColor: 'rgba(180,180,190,0.12)' },
+    pos3: { backgroundColor: 'rgba(180,120,60,0.12)' },
+    posText: {
+        fontSize: 12, fontWeight: '600',
+        color: 'rgba(255,255,255,0.35)',
+    },
+    posTextCanet: { color: '#4ade80' },
+    posTextPodium: { fontWeight: '700' },
+
+    // Équipe
+    teamName: {
+        flex: 1,
+        fontSize: 12, fontWeight: '500',
+        color: 'rgba(255,255,255,0.65)',
+        paddingRight: 6,
+    },
+    teamNameCanet: {
+        color: '#4ade80',
+        fontWeight: '600',
+    },
+
+    // Points
+    pts: {
+        width: 30, textAlign: 'center',
+        fontSize: 13, fontWeight: '700',
+        color: '#ffffff',
+    },
+    ptsCanet: { color: '#4ade80' },
+
+    // Stats
+    stat: {
+        width: 24, textAlign: 'center',
         fontSize: 12,
-        color: '#999',
+        color: 'rgba(255,255,255,0.35)',
     },
+
+    // Diff
+    diff: {
+        width: 28, textAlign: 'center',
+        fontSize: 12, fontWeight: '600',
+    },
+    diffPos:  { color: '#4ade80' },
+    diffNeg:  { color: '#f87171' },
+    diffZero: { color: 'rgba(255,255,255,0.3)' },
 });

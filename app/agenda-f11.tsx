@@ -3,7 +3,7 @@ import { useAppStore } from '@/constants/filter';
 import { MatchCardProps } from '@/constants/MatchCardProps';
 import { ReadDB } from '@/hooks/firebase';
 import React, { useEffect, useState } from 'react';
-import { ActivityIndicator, StyleSheet, Switch, Text, View } from 'react-native';
+import { ActivityIndicator, StyleSheet, Switch, Text, TouchableOpacity, View } from 'react-native';
 
 export default function AgendaF11() {
   const { date } = useAppStore();
@@ -12,56 +12,60 @@ export default function AgendaF11() {
   const [homeFilter, setHomeFilter] = useState<boolean>(false);
 
   const filter = () => {
-    setHomeFilter( !homeFilter )
-    setLoading(true)
-    setMatches([])
-  }
+    setHomeFilter(!homeFilter);
+    setLoading(true);
+    setMatches([]);
+  };
 
   const fetchMatches = async () => {
     try {
       const result = await ReadDB(date, homeFilter);
       setMatches(result);
       setLoading(false);
-
     } catch (error) {
       console.error("Error fetching matches:", error);
     }
-
   };
 
   useEffect(() => {
-      if (date) {
-        setLoading(true)
-        fetchMatches();
-      }
-
-  }, [date, homeFilter]); // will force the refresh if date is updated
-
+    if (date) {
+      setLoading(true);
+      fetchMatches();
+    }
+  }, [date, homeFilter]);
 
   return (
-      <View style={styles.container} >
-          <View style={styles.container}>
-            <View style={styles.vstack}>
-              <Switch
-                trackColor={{ false: '#d4d4d4', true: '#0f4d03ff' }}
-                thumbColor="#fafafa"
-                value = {homeFilter}
-                onValueChange= {() => filter()}
-              />
-              <Text style={{color:"white"}}>Matchs à domicile uniquement</Text>
-            </View>
-            {loading ? (
-              <ActivityIndicator size="large" />
-            ) : (
-              <AgendaComponent
-                matchesData={matches}
-                plateauxData={[]}
-                showDetails={true}
-              />
-            )}
-          </View>
-      </View>
+    <View style={styles.container}>
 
+      {/* Filtre domicile */}
+      <TouchableOpacity style={styles.filterRow} onPress={filter} activeOpacity={0.7}>
+        <Switch
+          trackColor={{ false: '#1e2e1f', true: '#1a4a28' }}
+          thumbColor={homeFilter ? '#4ade80' : 'rgba(255,255,255,0.4)'}
+          ios_backgroundColor="#1e2e1f"
+          value={homeFilter}
+          onValueChange={filter}
+        />
+        <Text style={[styles.filterLabel, homeFilter && styles.filterLabelActive]}>
+          Matchs à domicile uniquement
+        </Text>
+      </TouchableOpacity>
+
+      {/* Divider */}
+      <View style={styles.divider} />
+
+      {/* Liste */}
+      {loading ? (
+        <ActivityIndicator size="large" color="#4ade80" style={{ marginTop: 40 }} />
+      ) : (
+        <AgendaComponent
+          matchesData={matches}
+          plateauxData={[]}
+          showDetails={true}
+        />
+      )}
+
+    </View>
   );
 }
 
@@ -69,15 +73,27 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
-    marginTop: 10,
-    backgroundColor: '#000000ff',
+    backgroundColor: '#0a0f0d',
   },
-  image: {
-    flex: 1
+  filterRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
+    paddingHorizontal: 20,
+    paddingVertical: 12,
   },
-  vstack: {
-    marginLeft: 30,
-    flexDirection: "row",
-    gap:10
-  }
+  filterLabel: {
+    color: 'rgb(255, 255, 255)',
+    fontSize: 13,
+    fontWeight: '500',
+  },
+  filterLabelActive: {
+    color: '#4ade80',
+  },
+  divider: {
+    height: 0.5,
+    backgroundColor: '#1a241b',
+    marginHorizontal: 16,
+    marginBottom: 8,
+  },
 });

@@ -1,7 +1,7 @@
 import { useAppStore } from '@/constants/filter';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import dayjs from 'dayjs';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 import {
     StyleSheet,
@@ -51,15 +51,15 @@ const WeekScheduler: React.FC<DateSelectorProps> =  ({ onDateChange }) => {
         return text
     }
 
-    // Side effects
-    useEffect(() => {
-        // Component did mount / update logic
+    // // Side effects
+    // useEffect(() => {
+    //     // Component did mount / update logic
 
-        // Cleanup function
-        return () => {
-            // Cleanup logic
-        };
-    }, []);
+    //     // Cleanup function
+    //     return () => {
+    //         // Cleanup logic
+    //     };
+    // }, []);
 
     // Render
     return (
@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        padding: 20
+        padding: 10
         //backgroundColor: '#fff',
     },
     content: {
@@ -91,7 +91,8 @@ const styles = StyleSheet.create({
     },
     text_team: {
         color: 'white',
-        fontSize: 20
+        fontSize: 20,
+        fontFamily: 'LatoRegular',
     }
 });
 

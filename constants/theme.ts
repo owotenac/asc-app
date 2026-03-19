@@ -7,7 +7,7 @@ import { Dimensions, Platform, StyleSheet } from 'react-native';
 
 const tintColorLight = '#0a7ea4';
 const tintColorDark = '#fff';
-export const asc_background = '#024906ff';
+export const asc_background = 'rgb(0, 39, 2)';
 const { height: screenHeight, width: screenWidth } = Dimensions.get('window');
 
 export const Colors = {

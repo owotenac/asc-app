@@ -1,4 +1,5 @@
 import { TabBarTheme } from '@/constants/theme';
+import { featureFlags } from '@/hooks/config';
 import { useColorScheme } from '@/hooks/use-color-scheme';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import Entypo from '@expo/vector-icons/Entypo';
@@ -20,13 +21,16 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: 'AS Canet Saison 2025 / 2026',
-          tabBarIcon: ({ color }) => <AntDesign name="team" size={24} color={'black'} /> ,
+          tabBarShowLabel: false,
+          headerShown: false,
+          title: '',
+          tabBarIcon: ({ color }) => <AntDesign name="home" size={24} color={'black'} /> ,
         }}
       />
       <Tabs.Screen
         name="full-agenda"
         options={{
+                    tabBarShowLabel: false,
           title: 'Agenda',
           tabBarIcon: ({ color }) => <Entypo name="calendar" size={24} color={'black'} />,
         }}
@@ -34,12 +38,12 @@ export default function TabLayout() {
       <Tabs.Screen
         name="admin"
         options={{
+                    tabBarShowLabel: false,
           title: 'Admin',
+          href: featureFlags.isReadOnly ? null : undefined,
           tabBarIcon: ({ color }) => <AntDesign name="menu" size={24} color={'black'} /> 
         }}
       />
-
-
     </Tabs>
   );
 }

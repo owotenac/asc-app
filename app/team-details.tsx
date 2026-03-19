@@ -1,5 +1,4 @@
 
-import { asc_background } from "@/constants/theme";
 import React from 'react';
 import { StyleSheet, useWindowDimensions } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
@@ -32,12 +31,29 @@ export default function TeamDetails() {
 
         <SafeAreaProvider>
             <SafeAreaView style={styles.container}>
-                <TabView style={styles.tabview}
+                <TabView
+                    style={styles.tabview}
                     navigationState={{ index, routes }}
                     renderScene={renderScene}
                     onIndexChange={tabChange}
                     initialLayout={{ width: layout.width, height: layout.height }}
-                    renderTabBar={props => <TabBar {...props} style={styles.tabbar} />}
+                    renderTabBar={props => (
+                        <TabBar
+                            {...props}
+                            // Fond de la barre
+                            style={styles.tabbar}
+                            // Fond de l'indicateur (trait sous l'onglet actif)
+                            indicatorStyle={styles.indicator}
+                            // Label actif
+                            activeColor="#4ade80"
+                            // Label inactif
+                            inactiveColor="rgba(255,255,255,0.3)"
+                            // Style du label
+                            //labelStyle={styles.label}
+                            // Pas de ripple Android
+                            android_ripple={{ borderless: true, color: 'rgba(74,222,128,0.1)' }}
+                        />
+                    )}
                 />
             </SafeAreaView>
         </SafeAreaProvider>
@@ -47,23 +63,28 @@ export default function TeamDetails() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: asc_background,
-        //verticalAlign: 'middle'
-    },
-    header: {
-        margin: 5,
-    },
-    text_team: {
-        color: "#fff",
-        fontSize: 30,
-        textAlign: "center",
-        fontFamily: "Exo2"
-    },
-    tabbar: {
-        backgroundColor: asc_background,
+        backgroundColor: '#0a0f0d',
     },
     tabview: {
-        flex: 1
-    }
+        flex: 1,
+    },
+    tabbar: {
+        backgroundColor: '#0a0f0d',
+        borderBottomWidth: 0.5,
+        borderBottomColor: '#1a241b',
+        elevation: 0,       // supprime l'ombre Android
+        shadowOpacity: 0,   // supprime l'ombre iOS
+    },
+    indicator: {
+        backgroundColor: '#4ade80',
+        height: 2,
+        borderRadius: 2,
+    },
+    label: {
+        fontSize: 13,
+        fontWeight: '600',
+        letterSpacing: 0.3,
+        textTransform: 'none', // évite le ALL CAPS par défaut
+    },
 
 });

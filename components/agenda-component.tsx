@@ -1,5 +1,6 @@
 import { useAppStore } from '@/constants/filter';
 import { MatchCardProps, PlateauCardProps } from '@/constants/MatchCardProps';
+import { featureFlags } from '@/hooks/config';
 import { useRouter } from 'expo-router';
 import React, { useEffect, useRef, useState } from 'react';
 import ActionSheetCustom from './action-sheet';
@@ -56,7 +57,7 @@ const AgendaComponent: React.FC<AgendaComponentProps> = ({ matchesData, plateaux
                 <FlatList
                     data={matchesData}
                     renderItem={({ item }) => (
-                        <TouchableOpacity onPress={() => select(item)}>
+                        <TouchableOpacity onPress={() => select(item)} disabled={featureFlags.isReadOnly} >
                             <MatchCard match={item} showDetails={showDetails} />
                         </TouchableOpacity>
                     )}
@@ -89,7 +90,8 @@ const AgendaComponent: React.FC<AgendaComponentProps> = ({ matchesData, plateaux
 // Styles
 const styles = StyleSheet.create({
     container: {
-        flex: 1
+        flex: 1,
+        marginTop: 10
         //backgroundColor: 'white'
     }
 });
