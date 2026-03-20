@@ -4,14 +4,12 @@ import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native
 import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
 import Head from 'expo-router/head';
-import { StatusBar } from 'expo-status-bar';
 import { useState } from 'react';
+import { StatusBar } from 'react-native';
 import 'react-native-reanimated';
 
 import { GluestackUIProvider } from '@/components/ui/gluestack-ui-provider';
 import '@/global.css';
-
-const logoASC = require('../assets/images/logo.png');
 
 
 
@@ -34,15 +32,15 @@ export default function RootLayout() {
       <Head>
         <title>AS Canet - L'application Officielle</title>
         <meta name="description" content="Application officielle de l'AS Canet." />
-        {/* <meta name="google-site-verification" content="9aO7EU-U11jWgoHXZnZOMDP_U_SDt9k7BhuoD319Va8" /> */}
+        <meta name="google-site-verification" content="uMsOvMMmk-V6wnN0mHaEQ9FLCfAuaLTKo0DB2rJKvTI" /> 
         <meta name="keywords" content="ASCANET, AS Canet, Football, district, foot, ecole de foot, ASCanet, Hérault, Herault" />
 
         {/* Open Graph */}
         <meta property="og:title" content="AS Canet" />
         <meta property="og:description" content="Application officielle de l'AS Canet." />
-        <meta property="og:url" content="https://ascanet.fr" />
+        <meta property="og:url" content="https://www.ascanet.fr" />
         <meta property="og:type" content="website" />
-        <meta property="og:image" content="https://ascanet.fr/og-image.png" />
+        <meta property="og:image" content="https://www.ascanet.fr/og-image.png" />
 
         {/* Twitter/X */}
         <meta name="twitter:card" content="summary_large_image" />
@@ -50,6 +48,7 @@ export default function RootLayout() {
         <meta name="twitter:description" content="Application officielle de l'AS Canet." />
       </Head>    
     <GluestackUIProvider mode="dark">
+     <StatusBar barStyle="light-content" backgroundColor="transparent" translucent />
       <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
         <Stack
           screenOptions={
@@ -72,7 +71,6 @@ export default function RootLayout() {
           <Stack.Screen name="team-selection" options={{ headerShown: true, title: "Select Teams" }} />
           <Stack.Screen name="team-classement" options={{ headerShown: true, title: "Select Classement" }} />
         </Stack>
-        <StatusBar style="dark" />
       </ThemeProvider>
     </GluestackUIProvider>
   </>

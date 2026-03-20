@@ -130,8 +130,8 @@ const styles = StyleSheet.create({
         textAlign: "center"
     },
     dateTime: {
-        color: 'rgba(224, 224, 224, 0.77)',
-        fontSize: 12,
+        color: 'rgba(224, 224, 224, 0.87)',
+        fontSize: 13,
         textTransform: 'uppercase',
         marginBottom: 10
     },
