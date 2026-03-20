@@ -1,19 +1,16 @@
+import { AppContainer } from '@/components/appcontainer';
 import { TabBarTheme } from '@/constants/theme';
-import { useColorScheme } from '@/hooks/use-color-scheme';
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
 import Head from 'expo-router/head';
-import { useState } from 'react';
 import { StatusBar } from 'react-native';
+
 import 'react-native-reanimated';
 
 
 
 
 export default function RootLayout() {
-  const colorScheme = useColorScheme();
-  const [count, setCount] = useState(0);
 
   const [loaded] = useFonts({
     'LatoRegular': require("@/assets/font/Lato-Regular.ttf"),
@@ -45,7 +42,7 @@ export default function RootLayout() {
         <meta name="twitter:description" content="Application officielle de l'AS Canet." />
       </Head>    
      <StatusBar barStyle="light-content" backgroundColor="transparent" translucent />
-      <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+     <AppContainer>
         <Stack
           screenOptions={
             TabBarTheme
@@ -68,7 +65,7 @@ export default function RootLayout() {
           <Stack.Screen name="team-classement" options={{ headerShown: true, title: "Select Classement" }} />
           <Stack.Screen name="legalpage" options={{ headerShown: false}} />
         </Stack>
-      </ThemeProvider>
+  </AppContainer>        
   </>
   );
 }

@@ -72,9 +72,9 @@ export default function StartScreen() {
                   </View>
                 ))}
               </View>
+          <FooterWeb/>
             </>
           )}
-          <FooterWeb/>
         </ScrollView>
 
       </SafeAreaView>

@@ -174,11 +174,11 @@ const styles = StyleSheet.create({
         borderBottomColor: '#1a241b',
         marginBottom: 4,
     },
-    hPos:  { width: 28, fontSize: 10, fontWeight: '600', color: 'rgba(255,255,255,0.25)', letterSpacing: 0.5 },
-    hTeam: { flex: 1, fontSize: 10, fontWeight: '600', color: 'rgba(255,255,255,0.25)', letterSpacing: 0.5 },
-    hPts:  { width: 30, textAlign: 'center', fontSize: 10, fontWeight: '700', color: 'rgba(255,255,255,0.4)', letterSpacing: 0.5 },
-    hStat: { width: 24, textAlign: 'center', fontSize: 10, fontWeight: '600', color: 'rgba(255,255,255,0.2)', letterSpacing: 0.5 },
-    hDiff: { width: 28, textAlign: 'center', fontSize: 10, fontWeight: '600', color: 'rgba(255,255,255,0.2)', letterSpacing: 0.5 },
+    hPos:  { width: 28, fontSize: 10, fontWeight: '600', color: 'rgba(255,255,255,0.5)', letterSpacing: 0.5 },
+    hTeam: { flex: 1, fontSize: 10, fontWeight: '600', color: 'rgba(255,255,255,0.5)', letterSpacing: 0.5 },
+    hPts:  { width: 30, textAlign: 'center', fontSize: 10, fontWeight: '700', color: 'rgba(255,255,255,0.5)', letterSpacing: 0.5 },
+    hStat: { width: 24, textAlign: 'center', fontSize: 10, fontWeight: '600', color: 'rgba(255,255,255,0.5)', letterSpacing: 0.5 },
+    hDiff: { width: 28, textAlign: 'center', fontSize: 10, fontWeight: '600', color: 'rgba(255,255,255,0.5)', letterSpacing: 0.5 },
 
     // Ligne
     row: {
