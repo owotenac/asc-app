@@ -1,23 +1,11 @@
-import domtoimage from 'dom-to-image';
 import * as MediaLibrary from 'expo-media-library';
 import { Alert, Platform } from 'react-native';
 import ViewShot, { captureRef } from 'react-native-view-shot';
-
-  async function getPermission() {
-    //to get access to Media
-    // if (!permissionResponse?.granted) {
-    //   console.log("No permission to write")
-    //   await requestPermission();
-    // }
-  }
-
 
 export const screenShot = async (viewShotRef: React.RefObject<ViewShot | null>) => {
 
     if (Platform.OS !== 'web') {
       try {
-        getPermission();
-
         if (viewShotRef && viewShotRef.current) {
           // Capture the view as a URI
           const uri = await captureRef(viewShotRef, {
@@ -32,27 +20,6 @@ export const screenShot = async (viewShotRef: React.RefObject<ViewShot | null>) 
         }
       } catch (error) {
         console.error('Error capturing view:', error);
-      }
-    }
-    else {
-
-      if (viewShotRef && viewShotRef.current) {
-
-        try {
-          const dataUrl = await domtoimage.toJpeg(viewShotRef.current, {
-            quality: 0.95,
-
-          });
-
-          let link = document.createElement('a');
-          link.download = 'sticker-smash.jpeg';
-          link.href = dataUrl;
-          link.click();
-        }
-
-        catch (e) {
-          console.log(e);
-        }
       }
     }
   };

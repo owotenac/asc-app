@@ -8,9 +8,6 @@ import { useState } from 'react';
 import { StatusBar } from 'react-native';
 import 'react-native-reanimated';
 
-import { GluestackUIProvider } from '@/components/ui/gluestack-ui-provider';
-import '@/global.css';
-
 
 
 
@@ -47,7 +44,6 @@ export default function RootLayout() {
         <meta name="twitter:title" content="AS Canet" />
         <meta name="twitter:description" content="Application officielle de l'AS Canet." />
       </Head>    
-    <GluestackUIProvider mode="dark">
      <StatusBar barStyle="light-content" backgroundColor="transparent" translucent />
       <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
         <Stack
@@ -72,7 +68,6 @@ export default function RootLayout() {
           <Stack.Screen name="team-classement" options={{ headerShown: true, title: "Select Classement" }} />
         </Stack>
       </ThemeProvider>
-    </GluestackUIProvider>
   </>
   );
 }
