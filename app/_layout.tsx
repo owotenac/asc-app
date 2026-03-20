@@ -41,8 +41,8 @@ export default function RootLayout() {
         <meta name="twitter:title" content="AS Canet" />
         <meta name="twitter:description" content="Application officielle de l'AS Canet." />
       </Head>    
-     <StatusBar barStyle="light-content" backgroundColor="transparent" translucent />
      <AppContainer>
+     <StatusBar barStyle="light-content" backgroundColor="transparent" translucent />
         <Stack
           screenOptions={
             TabBarTheme
