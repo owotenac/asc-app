@@ -66,6 +66,7 @@ export default function RootLayout() {
           <Stack.Screen name="program" options={{ headerShown: true, title: "Programme" }} />
           <Stack.Screen name="team-selection" options={{ headerShown: true, title: "Select Teams" }} />
           <Stack.Screen name="team-classement" options={{ headerShown: true, title: "Select Classement" }} />
+          <Stack.Screen name="legalpage" options={{ headerShown: false}} />
         </Stack>
       </ThemeProvider>
   </>

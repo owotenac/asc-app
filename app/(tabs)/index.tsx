@@ -1,3 +1,4 @@
+import FooterWeb from '@/components/footer';
 import { TeamCard } from '@/components/team-card';
 import { CategoryProps } from '@/constants/CategoryProps';
 import { asc_background } from "@/constants/theme";
@@ -73,6 +74,7 @@ export default function StartScreen() {
               </View>
             </>
           )}
+          <FooterWeb/>
         </ScrollView>
 
       </SafeAreaView>
